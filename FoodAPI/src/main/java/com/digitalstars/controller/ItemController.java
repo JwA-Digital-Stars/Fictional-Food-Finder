@@ -13,20 +13,23 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-    @RequestMapping("/createItem")
-    public String create(@RequestParam String itemName, @RequestParam float cost){
-        Item item = itemService.create(itemName, cost);
+    @RequestMapping("/create/item")
+    public String create(@RequestParam String itemName, @RequestParam float cost, @RequestParam String truckName){
+        Item item = itemService.create(itemName, cost, truckName);
         return item.toString();
     }
     
-    @RequestMapping("/getItems")
-    public void getItems(@RequestParam String truckName){
+    @RequestMapping("/items")
+    public void getItems(){
         
     }
     
+    @RequestMapping("/{truckId}/{itemName}")
+    public void getItem(@RequestParam String itemName, @RequestParam String truckId){
+        
+    }
     
-    
-    @RequestMapping("/deleteItem")
+    @RequestMapping("/delete/item")
     public void delete(@RequestParam String itemName){
         
     }

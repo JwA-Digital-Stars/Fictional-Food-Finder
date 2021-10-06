@@ -5,9 +5,12 @@ import com.digitalstars.model.Truck;
 import com.digitalstars.model.TruckOwner;
 import com.digitalstars.model.User;
 import com.digitalstars.repository.UserRepository;
-import java.util.*;//List
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserService{
     
     @Autowired
@@ -26,14 +29,9 @@ public class UserService{
         return userRepo.findAll();
     }
     
-    
     public User getUser(int id){
         Optional<User> userOp = userRepo.findById(id);
-        
-        if (userOp.isEmpty())
-            return null;
-        
-        return userOp.get();
+        return userOp.orElse(null);
     }
     
     public boolean addFavorite(Customer customer, Truck truck){

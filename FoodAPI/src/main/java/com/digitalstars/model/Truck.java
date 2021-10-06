@@ -1,7 +1,7 @@
 package com.digitalstars.model;
 
 import java.io.Serializable;
-import java.util.*;//List, ArrayList, Map, HashMap
+import java.util.*;//List, ArrayList
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
