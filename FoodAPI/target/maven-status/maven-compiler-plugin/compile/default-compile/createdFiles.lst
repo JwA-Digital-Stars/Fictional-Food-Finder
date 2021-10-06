@@ -1,0 +1,13 @@
+com\example\model\Item.class
+com\example\model\TruckOwner.class
+com\example\controller\TruckController.class
+com\example\service\ItemService.class
+com\example\service\TruckService.class
+com\example\model\Truck.class
+com\example\controller\UserController.class
+com\example\repository\TruckRepository.class
+com\example\repository\ItemRepository.class
+com\example\model\Customer.class
+com\example\model\User.class
+.netbeans_automatic_build
+com\example\FoodAPI.class
