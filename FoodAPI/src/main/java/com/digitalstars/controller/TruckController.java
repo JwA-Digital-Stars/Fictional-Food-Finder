@@ -1,9 +1,9 @@
-package com.example.controller;
+package com.digitalstars.controller;
 
-import com.example.model.Item;
-import com.example.model.Truck;
-import com.example.service.ItemService;
-import com.example.service.TruckService;
+import com.digitalstars.model.Item;
+import com.digitalstars.model.Truck;
+import com.digitalstars.service.ItemService;
+import com.digitalstars.service.TruckService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +15,8 @@ public class TruckController {
     private ItemService itemService;
     
     @RequestMapping("/createTruck")
-    public String createTruck(@RequestParam String email, @RequestParam String name){
-        Truck truck = truckService.create(email, name);
+    public String createTruck(@RequestParam String name, @RequestParam int ownerId){
+        Truck truck = truckService.create(name, ownerId);
         
         return truck.toString();
     }

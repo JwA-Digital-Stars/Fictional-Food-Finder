@@ -1,4 +1,4 @@
-package com.example.model;
+package com.digitalstars.model;
 
 import java.io.Serializable;
 import javax.persistence.Column;

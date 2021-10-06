@@ -1,24 +1,18 @@
-package com.example.model;
+package com.digitalstars.model;
 
 public class TruckOwner extends User{
     private Truck truck;
     
     public TruckOwner(){
         super();
-        id.type = "owner";
-        truck = new Truck();
-    }
-    
-    public TruckOwner(String email){
-        super(email);
-        id.type = "owner";
+        type = "owner";
         truck = new Truck();
     }
     
     public TruckOwner(String email, String password, String name){
         super(email, password, name);
         truck = new Truck();
-        id.type = "owner";
+        type = "owner";
     }
     
     public Truck getTruck(){
@@ -31,6 +25,6 @@ public class TruckOwner extends User{
     
     @Override
     public String toString(){
-        return String.format("User(email=%s, name=%s, type=owner, truck=%s)", id.email, name, truck.getName());
+        return String.format("User(email=%s, name=%s, type=owner, truck=%s)", email, name, truck.getName());
     }
 }

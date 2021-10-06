@@ -1,7 +1,7 @@
-package com.example.controller;
+package com.digitalstars.controller;
 
-import com.example.model.Item;
-import com.example.service.ItemService;
+import com.digitalstars.model.Item;
+import com.digitalstars.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
