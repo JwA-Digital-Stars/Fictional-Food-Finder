@@ -5,7 +5,9 @@ import com.digitalstars.model.Truck;
 import com.digitalstars.repository.TruckRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TruckService {
 
     @Autowired
@@ -18,11 +20,7 @@ public class TruckService {
     
     public Truck getTruck(String name){
         Optional<Truck> truckOp = truckRepo.findById(name);
-        
-        if (truckOp.isEmpty())
-            return null;
-        
-        return truckOp.get();
+        return truckOp.orElse(null);
     }
     
     public boolean addItem(Truck truck, Item item){        

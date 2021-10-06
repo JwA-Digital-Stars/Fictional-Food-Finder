@@ -16,6 +16,18 @@ public class Item implements Serializable{
         public String name;
         @Column
         public String truckId;
+        
+        public ItemID(){
+            super();
+            name = "Item name";
+            truckId = "Truck name";
+        }
+        
+        public ItemID(String itemName, String truckName){
+            super();
+            name = itemName;
+            truckId = truckName;
+        }
     }
     @EmbeddedId
     private ItemID id;
@@ -24,11 +36,13 @@ public class Item implements Serializable{
     
     public Item(){
         super();
+        id = new ItemID();
+        cost = 0;
     }
     
-    public Item(String name, float cost){
+    public Item(String name, float cost, String truckId){
         super();
-        id.name = name;
+        id = new ItemID(name, truckId);
         this.cost = cost;
     }
     
