@@ -1,4 +1,4 @@
-package com.example.model;
+package com.digitalstars.model;
 
 import java.io.Serializable;
 import java.util.*;//List, ArrayList, Map, HashMap
@@ -20,21 +20,21 @@ public class Truck implements Serializable{
     @Column
     private String hours;
     @Column
-    private String ownerId;
+    private int ownerId;
     //private Location location;
     
     public Truck(){
         super();
         name = "New truck";
-        ownerId = "default@email.com";
+        ownerId = 0;
         hours = populateHours();
         menu = new ArrayList<>();
     }
     
-    public Truck(String email, String name){
+    public Truck(String name, int ownerId){
         super();
-        ownerId = email;
         this.name = name;
+        this.ownerId = ownerId;
         menu = new ArrayList<>();
         hours = populateHours();
         populateHours();
@@ -65,12 +65,12 @@ public class Truck implements Serializable{
         this.hours = hours;
     }
     
-    public String getOwnerId(){
+    public int getOwnerId(){
         return ownerId;
     }
     
-    public void setOwnerId(String email){
-        ownerId = email;
+    public void setOwnerId(int ownerId){
+        this.ownerId = ownerId;
     }
     
     /*

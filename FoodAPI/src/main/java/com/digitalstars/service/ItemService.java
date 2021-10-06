@@ -1,7 +1,7 @@
-package com.example.service;
+package com.digitalstars.service;
 
-import com.example.model.Item;
-import com.example.repository.ItemRepository;
+import com.digitalstars.model.Item;
+import com.digitalstars.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ItemService {

@@ -1,10 +1,10 @@
-package com.example.service;
+package com.digitalstars.service;
 
-import com.example.model.Customer;
-import com.example.model.Truck;
-import com.example.model.TruckOwner;
-import com.example.model.User;
-import com.example.repository.UserRepository;
+import com.digitalstars.model.Customer;
+import com.digitalstars.model.Truck;
+import com.digitalstars.model.TruckOwner;
+import com.digitalstars.model.User;
+import com.digitalstars.repository.UserRepository;
 import java.util.*;//List
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,48 +27,13 @@ public class UserService{
     }
     
     
-    public User getUser(String email, String type){
-        User temp = null;
-        switch (type){
-            case "customer":
-                temp = new Customer(email);
-                break;
-            case "owner":
-                temp = new TruckOwner(email);
-                break;
-            default:
-                break;
-        }
-        
-        if (temp == null)
-            return null;
-        
-        Optional<User> userOp = userRepo.findById(temp.getUserID());
+    public User getUser(int id){
+        Optional<User> userOp = userRepo.findById(id);
         
         if (userOp.isEmpty())
             return null;
         
         return userOp.get();
-    }
-    
-    public User getCustomer(String email){
-        List<User> users = getAll();
-        
-        for (User u : users){
-            if (u.getEmail().equals(email) && u.getType().equals("customer"))
-                return u;
-        }
-        return null;
-    }
-    
-    public User getTruckOwner(String email){
-        List<User> users = getAll();
-        
-        for (User u : users){
-            if (u.getEmail().equals(email) && u.getType().equals("owner"))
-                return u;
-        }
-        return null;
     }
     
     public boolean addFavorite(Customer customer, Truck truck){
@@ -91,10 +56,10 @@ public class UserService{
         return true;
     }
     
-    public Truck addTruck(TruckOwner owner, Truck truck){
+    public String addTruck(TruckOwner owner, Truck truck){
         owner.setTruck(truck);
         userRepo.save(owner);
-        return truck;
+        return truck.toString();
     }
     
     public void delete(User user){

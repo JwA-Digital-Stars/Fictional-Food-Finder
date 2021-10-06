@@ -1,8 +1,8 @@
-package com.example.service;
+package com.digitalstars.service;
 
-import com.example.model.Item;
-import com.example.model.Truck;
-import com.example.repository.TruckRepository;
+import com.digitalstars.model.Item;
+import com.digitalstars.model.Truck;
+import com.digitalstars.repository.TruckRepository;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,9 +11,9 @@ public class TruckService {
     @Autowired
     private TruckRepository truckRepo;
     
-    public Truck create(String email, String name){
+    public Truck create(String name, int ownerId){
         
-        return truckRepo.save(new Truck(email, name));
+        return truckRepo.save(new Truck(name, ownerId));
     }
     
     public Truck getTruck(String name){

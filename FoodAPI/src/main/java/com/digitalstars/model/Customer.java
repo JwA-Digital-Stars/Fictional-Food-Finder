@@ -1,4 +1,4 @@
-package com.example.model;
+package com.digitalstars.model;
 
 import java.util.*;//List, ArrayList
 
@@ -6,19 +6,13 @@ public class Customer extends User{
     private List<Truck> favorites;
     public Customer(){
         super();
-        id.type = "customer";
-        favorites = new ArrayList<>();
-    }
-    
-    public Customer(String email){
-        super(email);
-        id.type = "customer";
+        type = "customer";
         favorites = new ArrayList<>();
     }
     
     public Customer(String email, String password, String name){
         super(email, password, name);
-        id.type = "customer";
+        type = "customer";
         favorites = new ArrayList<>();
     }
     
@@ -32,6 +26,6 @@ public class Customer extends User{
     
     @Override
     public String toString(){
-        return String.format("User(email=%s, name=%s, type=customer)", id.email, name);
+        return String.format("User(email=%s, name=%s, type=customer)", email, name);
     }
 }

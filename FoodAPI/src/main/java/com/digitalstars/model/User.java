@@ -1,57 +1,57 @@
-package com.example.model;
+package com.digitalstars.model;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="users")
 public abstract class User implements Serializable {
-    @Embeddable
-    public class UserID{
-        @Column
-        public String email;
-        @Column
-        public String type;
-    }
     
-    @EmbeddedId
-    protected UserID id;
+    @Id
+    @Column
+    protected int id;
+    @Column
+    protected String email;
     @Column
     protected String password;
     @Column
     protected String name;
-
+    @Column
+    protected String type;
+    
     public User(){
         super();
-        id.email = "default@email.com";
+        email = "default@email.com";
         password = "Password";
         name = "Your name here";
-    }
-    
-    public User(String email){
-        super();
-        id.email = email;
-        id.type = "user";
-        password = "Password";
-        name = "Your name here";
+        type = "user";
     }
     
     public User(String email, String password, String name){
         super();
-        id.email = email;
+        this.email = email;
         this.password = password;
         this.name = name;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     
     public String getEmail(){
-        return id.email;
+        return email;
     }
     
     public void setEmail(String email){
-        id.email = email;
+        this.email = email;
     }
     
     public String getPassword(){
@@ -71,20 +71,11 @@ public abstract class User implements Serializable {
     }
 
     public String getType() {
-        return id.type;
+        return type;
     }
 
     public void setType(String type) {
-        id.type = type;
+        this.type = type;
     }
-    
-    public UserID getUserID(){
-        return id;
-    }
-    
-    public void setUserID(UserID id){
-        this.id = id;
-    }
-    
 }
 
