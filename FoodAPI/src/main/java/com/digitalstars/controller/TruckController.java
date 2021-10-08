@@ -26,7 +26,9 @@ public class TruckController {
     @RequestMapping("/{truckName}/addItem")
     public String addItem(@RequestParam String name, @RequestParam String itemName, @RequestParam float cost){
         Truck truck = truckService.getTruck(name);
-        Item item = itemService.create(itemName, cost);
+        if (truck == null)
+            return "No truck found.";
+        Item item = itemService.create(itemName, cost, name);
         
         boolean result = truckService.addItem(truck, item);
         
