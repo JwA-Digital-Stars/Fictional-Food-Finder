@@ -2,6 +2,7 @@ package com.digitalstars.controller;
 
 import com.digitalstars.model.Item;
 import com.digitalstars.service.ItemService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,8 +21,8 @@ public class ItemController {
     }
     
     @RequestMapping("/items")
-    public void getItems(){
-        
+    public List<Item> getItems(){
+        return itemService.getItems();
     }
     
     @RequestMapping("/{truckId}/{itemName}")
