@@ -2,6 +2,7 @@ package com.digitalstars.service;
 
 import com.digitalstars.model.Item;
 import com.digitalstars.model.Item.ItemID;
+import com.digitalstars.model.Truck;
 import com.digitalstars.repository.ItemRepository;
 import java.util.List;
 import java.util.Optional;
@@ -14,18 +15,18 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepo;
     
-    public Item create(String itemName, float cost, String truckName) {
-        return itemRepo.save(new Item(itemName, cost, truckName));
+    public Item create(String itemName, float cost, Truck truck) {
+        return itemRepo.save(new Item(itemName, cost, truck));
     }
     
     public List<Item> getItems(){
         return itemRepo.findAll();
     }
     
-    public List<Item> getItems(String truckId){
+    public List<Item> getItems(Truck truck){
         List<Item> items = itemRepo.findAll();
         
-        items.stream().filter(i -> (!i.getTruckId().equals(truckId))).forEachOrdered(i -> {
+        items.stream().filter(i -> (i.getTruck() != truck)).forEachOrdered(i -> {
             items.remove(i);
         });
         

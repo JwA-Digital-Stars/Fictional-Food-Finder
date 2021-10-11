@@ -6,7 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="truck")
@@ -14,8 +14,7 @@ public class Truck implements Serializable{
     @Id
     @Column
     private String name;
-    @Column
-    @OneToMany
+    @Transient
     private List<Item> menu;
     @Column
     private String hours;

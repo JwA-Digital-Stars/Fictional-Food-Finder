@@ -34,6 +34,11 @@ public class UserService{
         return userOp.orElse(null);
     }
     
+    public boolean login(String email, String password, String type){
+        List<User> users = userRepo.findByEmail(email);        
+        return users.stream().anyMatch(u -> (u.getPassword().equals(password) && u.getType().equals(type)));
+    }
+    
     public boolean addFavorite(Customer customer, Truck truck){
         if (customer.getFavorites().contains(truck))
             return false;
