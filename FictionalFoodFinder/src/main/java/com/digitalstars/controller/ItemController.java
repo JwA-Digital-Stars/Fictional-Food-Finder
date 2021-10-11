@@ -1,7 +1,9 @@
 package com.digitalstars.controller;
 
 import com.digitalstars.model.Item;
+import com.digitalstars.model.Truck;
 import com.digitalstars.service.ItemService;
+import com.digitalstars.service.TruckService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +15,13 @@ public class ItemController {
     
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private TruckService truckService;
 
     @RequestMapping("/create/item")
     public String create(@RequestParam String itemName, @RequestParam float cost, @RequestParam String truckName){
-        Item item = itemService.create(itemName, cost, truckName);
+        Truck truck = truckService.getTruck(truckName);
+        Item item = itemService.create(itemName, cost, truck);
         return item.toString();
     }
     

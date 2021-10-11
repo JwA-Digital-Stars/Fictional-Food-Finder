@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,19 +15,17 @@ public class Item implements Serializable{
     public class ItemID{
         @Column
         public String name;
-        @Column
-        public String truckId;
+        @OneToOne
+        public Truck truck;
         
         public ItemID(){
             super();
-            name = "Item name";
-            truckId = "Truck name";
         }
         
-        public ItemID(String itemName, String truckName){
+        public ItemID(String itemName, Truck truck){
             super();
             name = itemName;
-            truckId = truckName;
+            this.truck = truck;
         }
     }
     @EmbeddedId
@@ -40,9 +39,9 @@ public class Item implements Serializable{
         cost = 0;
     }
     
-    public Item(String name, float cost, String truckId){
+    public Item(String name, float cost, Truck truck){
         super();
-        id = new ItemID(name, truckId);
+        id = new ItemID(name, truck);
         this.cost = cost;
     }
     
@@ -62,16 +61,16 @@ public class Item implements Serializable{
         this.cost = cost;
     }
     
-    public String getTruckId(){
-        return id.truckId;
+    public Truck getTruck(){
+        return id.truck;
     }
     
-    public void setTruckId(String truckName){
-        id.truckId = truckName;
+    public void setTruckId(Truck truck){
+        id.truck = truck;
     }
     
     @Override
     public String toString(){
-        return String.format("Item(itemName=%s, cost=%.2f, truckId=%s)", id.name, cost, id.truckId);
+        return String.format("Item(itemName=%s, cost=%.2f, truckId=%s)", id.name, cost, id.truck.getName());
     }
 }

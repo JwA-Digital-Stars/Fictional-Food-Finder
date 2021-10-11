@@ -31,17 +31,27 @@ public class UserController {
         return user.toString();
     }
     
-    @RequestMapping("/customer/{id}/addFavorite")
+    @RequestMapping("/login")
+    public String login(@RequestParam String email, @RequestParam String password, @RequestParam String type){
+        boolean result = userService.login(email, password, type);
+        
+        if(result)
+            return type;
+        else
+            return "Invalid login";
+    }
+    
+    @RequestMapping("/customer/addFavorite")
     public void addFavorite(@RequestParam int id, @RequestParam String truckId){
         
     }
     
-    @RequestMapping("/customer/{id}/removeFavorite")
+    @RequestMapping("/customer/removeFavorite")
     public void removeFavorite(@RequestParam int id, @RequestParam String truckId){
         
     }
     
-    @RequestMapping("/owner/{id}/addTruck")
+    @RequestMapping("/owner/addTruck")
     public void addTruck(@RequestParam int id, @RequestParam String truckName){
         TruckOwner owner = (TruckOwner) userService.getUser(id);
         

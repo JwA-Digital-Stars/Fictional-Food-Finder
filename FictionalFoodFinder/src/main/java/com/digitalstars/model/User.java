@@ -8,7 +8,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="users")
 public abstract class User implements Serializable {
-    
     @Id
     @Column
     protected int id;

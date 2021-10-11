@@ -28,7 +28,7 @@ public class TruckController {
         Truck truck = truckService.getTruck(name);
         if (truck == null)
             return "No truck found.";
-        Item item = itemService.create(itemName, cost, name);
+        Item item = itemService.create(itemName, cost, truck);
         
         boolean result = truckService.addItem(truck, item);
         
