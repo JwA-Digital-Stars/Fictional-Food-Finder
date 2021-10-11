@@ -1,4 +1,4 @@
-package com.digitalstars.service;
+package net.digitalstars.service;
 
 import com.digitalstars.model.Item;
 import com.digitalstars.model.Item.ItemID;

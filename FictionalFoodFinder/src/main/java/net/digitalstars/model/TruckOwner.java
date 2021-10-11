@@ -1,4 +1,4 @@
-package com.digitalstars.model;
+package net.digitalstars.model;
 
 public class TruckOwner extends User{
     private Truck truck;

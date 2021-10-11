@@ -1,4 +1,4 @@
-package com.digitalstars.model;
+package net.digitalstars.model;
 
 import java.io.Serializable;
 import java.util.*;//List, ArrayList
@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 @Entity
@@ -18,22 +19,18 @@ public class Truck implements Serializable{
     private List<Item> menu;
     @Column
     private String hours;
-    @Column
-    private int ownerId;
+    @OneToOne
+    private User truckOwner;
     //private Location location;
     
     public Truck(){
         super();
-        name = "New truck";
-        ownerId = 0;
-        hours = populateHours();
-        menu = new ArrayList<>();
     }
     
-    public Truck(String name, int ownerId){
+    public Truck(String name, User truckOwner){
         super();
         this.name = name;
-        this.ownerId = ownerId;
+        this.truckOwner = truckOwner;
         menu = new ArrayList<>();
         hours = populateHours();
         populateHours();
@@ -64,12 +61,12 @@ public class Truck implements Serializable{
         this.hours = hours;
     }
     
-    public int getOwnerId(){
-        return ownerId;
+    public User getOwnerId(){
+        return truckOwner;
     }
     
-    public void setOwnerId(int ownerId){
-        this.ownerId = ownerId;
+    public void setOwnerId(User truckOwner){
+        this.truckOwner = truckOwner;
     }
     
     /*

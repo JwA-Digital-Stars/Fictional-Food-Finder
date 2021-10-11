@@ -1,9 +1,11 @@
-package com.digitalstars.service;
+package net.digitalstars.service;
 
 import com.digitalstars.model.Customer;
+import com.digitalstars.model.Favorite;
 import com.digitalstars.model.Truck;
 import com.digitalstars.model.TruckOwner;
 import com.digitalstars.model.User;
+import com.digitalstars.repository.FavoritesRepository;
 import com.digitalstars.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +17,9 @@ public class UserService{
     
     @Autowired
     private UserRepository userRepo;
+    
+    @Autowired
+    private FavoritesRepository favoriteRepo;
     
     public User create(String email, String password, String name, String type){
         if (type.equalsIgnoreCase("customer"))
@@ -35,14 +40,15 @@ public class UserService{
     }
     
     public boolean login(String email, String password, String type){
-        List<User> users = userRepo.findByEmail(email);        
+        List<User> users = userRepo.findAllByEmail(email);        
         return users.stream().anyMatch(u -> (u.getPassword().equals(password) && u.getType().equals(type)));
     }
     
     public boolean addFavorite(Customer customer, Truck truck){
+        List<Favorite> favorites = favoriteRepo.findAllByCustomer(customer);
         if (customer.getFavorites().contains(truck))
             return false;
-            
+        
         customer.getFavorites().add(truck);
         
         userRepo.save(customer);
@@ -67,5 +73,9 @@ public class UserService{
     
     public void delete(User user){
         userRepo.delete(user);
+    }
+
+    public List<Truck> getFavorites(int id) {
+        return null;
     }
 }

@@ -1,4 +1,4 @@
-package com.digitalstars.repository;
+package net.digitalstars.repository;
 
 import com.digitalstars.model.Item;
 import com.digitalstars.model.Item.ItemID;
