@@ -1,6 +1,6 @@
-package com.digitalstars.repository;
+package net.digitalstars.repository;
 
-import com.digitalstars.model.Truck;
+import net.digitalstars.model.Truck;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

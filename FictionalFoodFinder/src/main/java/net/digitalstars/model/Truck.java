@@ -1,4 +1,4 @@
-package com.digitalstars.model;
+package net.digitalstars.model;
 
 import java.io.Serializable;
 import java.util.*;//List, ArrayList
@@ -6,7 +6,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
-import javax.persistence.Transient;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Table(name="truck")
@@ -14,62 +28,21 @@ public class Truck implements Serializable{
     @Id
     @Column
     private String name;
-    @Transient
+    @OneToMany
     private List<Item> menu;
     @Column
     private String hours;
-    @Column
-    private int ownerId;
+    @OneToOne
+    private Owner owner;
     //private Location location;
     
-    public Truck(){
-        super();
-        name = "New truck";
-        ownerId = 0;
-        hours = populateHours();
-        menu = new ArrayList<>();
-    }
-    
-    public Truck(String name, int ownerId){
+    public Truck(String name, Owner owner){
         super();
         this.name = name;
-        this.ownerId = ownerId;
+        this.owner = owner;
         menu = new ArrayList<>();
         hours = populateHours();
-        populateHours();
         //location = new Location();
-    }
-    
-    public String getName(){
-        return name;
-    }
-    
-    public void setName(String name){
-        this.name = name;
-    }
-    
-    public List<Item> getMenu(){
-        return menu;
-    }
-    
-    public void setMenu(List<Item> menu){
-        this.menu = menu;
-    }
-    
-    public String getHours(){
-        return hours;
-    }
-    
-    public void setHours(String hours){
-        this.hours = hours;
-    }
-    
-    public int getOwnerId(){
-        return ownerId;
-    }
-    
-    public void setOwnerId(int ownerId){
-        this.ownerId = ownerId;
     }
     
     /*

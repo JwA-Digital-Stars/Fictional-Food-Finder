@@ -1,24 +1,30 @@
-package com.digitalstars.controller;
+package net.digitalstars.controller;
 
-import com.digitalstars.model.Item;
-import com.digitalstars.model.Truck;
-import com.digitalstars.service.ItemService;
-import com.digitalstars.service.TruckService;
+import net.digitalstars.model.Item;
+import net.digitalstars.model.Truck;
+import net.digitalstars.model.Owner;
+import net.digitalstars.service.ItemService;
+import net.digitalstars.service.TruckService;
+import net.digitalstars.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("truckController")
+@RequestMapping("/truck")
 public class TruckController {
+    @Autowired 
+    private OwnerService ownerService;
     @Autowired
     private TruckService truckService;
     @Autowired
     private ItemService itemService;
     
-    @RequestMapping("/create/truck")
-    public String createTruck(@RequestParam String name, @RequestParam int ownerId){
-        Truck truck = truckService.create(name, ownerId);
+    @RequestMapping("/create")
+    public String createTruck(@RequestParam String name, @RequestParam String ownerId){
+        Owner truckOwner = ownerService.findById(ownerId);
+        Truck truck = truckService.create(name, truckOwner);
         
         return truck.toString();
     }

@@ -1,25 +1,26 @@
-package com.digitalstars.service;
+package net.digitalstars.service;
 
-import com.digitalstars.model.Item;
-import com.digitalstars.model.Truck;
-import com.digitalstars.repository.TruckRepository;
+import net.digitalstars.model.Item;
+import net.digitalstars.model.Truck;
+import net.digitalstars.repository.TruckRepository;
 import java.util.Optional;
+import net.digitalstars.model.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("truckService")
 public class TruckService {
 
     @Autowired
-    private TruckRepository truckRepo;
+    private TruckRepository truckRepository;
     
-    public Truck create(String name, int ownerId){
+    public Truck create(String name, Owner owner){
         
-        return truckRepo.save(new Truck(name, ownerId));
+        return truckRepository.save(new Truck(name, owner));
     }
     
     public Truck getTruck(String name){
-        Optional<Truck> truckOp = truckRepo.findById(name);
+        Optional<Truck> truckOp = truckRepository.findById(name);
         return truckOp.orElse(null);
     }
     
@@ -28,7 +29,7 @@ public class TruckService {
             return false;
         
         truck.getMenu().add(item);
-        truckRepo.save(truck);
+        truckRepository.save(truck);
         return true;
     }
     
@@ -38,12 +39,12 @@ public class TruckService {
             return false;
         
         truck.getMenu().remove(item);
-        truckRepo.save(truck);
+        truckRepository.save(truck);
         return true;
     }
     
     public void delete(Truck truck){
-        truckRepo.delete(truck);
+        truckRepository.delete(truck);
     }
     
 }//TruckService
