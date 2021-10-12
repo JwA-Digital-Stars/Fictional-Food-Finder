@@ -1,7 +1,7 @@
 package net.digitalstars.controller;
 
-import net.digitalstars.model.TruckOwner;
-import net.digitalstars.service.TruckOwnerService;
+import net.digitalstars.model.Owner;
+import net.digitalstars.service.OwnerService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,17 +17,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("truckOwnerController")
+@RestController("ownerController")
 @RequestMapping("/owner")
-public class TruckOwnerController {
+public class OwnerController {
 
-    private final TruckOwnerService usersService;
+    private final OwnerService ownerService;
     
     //private final TruckService truckService;
     
     @Autowired
-    public TruckOwnerController(TruckOwnerService usersService){
-        this.usersService = usersService;
+    public OwnerController(OwnerService ownerService){
+        this.ownerService = ownerService;
         //this.truckService = truckService;
     }
     
@@ -37,28 +37,28 @@ public class TruckOwnerController {
 //    }
     
     @PostMapping(path="/create", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public void create(@RequestBody Users users){
-        usersService.create(users);
+    public void create(@RequestBody Owner owner){
+        ownerService.create(owner);
     }
     
     @GetMapping(path="/all", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Users>> findAll(){
-        return new ResponseEntity<>(this.usersService.findAll(), HttpStatus.OK); 
+    public ResponseEntity<List<Owner>> findAll(){
+        return new ResponseEntity<>(this.ownerService.findAll(), HttpStatus.OK); 
     }
     
-    @RequestMapping("/{id}")
-    public String getUser(@PathVariable int id){
-        Users user = usersService.getUser(id);
-        System.out.println(user);
-        return user.toString();
+    @RequestMapping("/id")
+    public String findById(@RequestParam String email){
+        Owner owner = ownerService.findById(email);
+        System.out.println(owner);
+        return owner.toString();
     }
     
     @RequestMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, @RequestParam String type){
-        boolean result = usersService.login(email, password, type);
+    public String login(@RequestParam String email, @RequestParam String password){
+        boolean result = ownerService.login(email, password);
         
         if(result)
-            return type;
+            return "Successful login!";
         else
             return "Invalid login";
     }
@@ -84,7 +84,7 @@ public class TruckOwnerController {
 //    
 //    @RequestMapping("/owner/addTruck")
 //    public void addTruck(@RequestParam int id, @RequestParam String truckName){
-//        TruckOwner owner = (TruckOwner) userService.getUser(id);
+//        Owner owner = (Owner) userService.getUser(id);
 //        
 //        if (owner != null){
 //            Truck truck = truckService.create(truckName, owner);

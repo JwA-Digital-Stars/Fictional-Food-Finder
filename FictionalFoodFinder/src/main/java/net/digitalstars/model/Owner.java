@@ -13,6 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @Setter
@@ -22,11 +23,9 @@ import lombok.ToString;
 @AllArgsConstructor
 
 @Entity
-@Table(name="truck_owner")
-public class TruckOwner implements Serializable{
+@Table(name="owner")
+public class Owner implements Serializable{
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
     @Column
     private String email;
     @Column
@@ -35,6 +34,14 @@ public class TruckOwner implements Serializable{
     private String name;
     @OneToOne
     private Truck truck;
+    
+    @Autowired
+    public Owner(String email, String password, String name){
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        truck = new Truck();
+    }
     
 }
 

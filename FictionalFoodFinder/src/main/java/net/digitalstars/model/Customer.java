@@ -1,5 +1,6 @@
 package net.digitalstars.model;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter
 @Setter
@@ -26,8 +28,6 @@ import lombok.ToString;
 @Table(name="customer")
 public class Customer implements Serializable{
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
     @Column
     private String email;
     @Column
@@ -36,5 +36,13 @@ public class Customer implements Serializable{
     private String name;
     @ManyToMany
     private List<Truck> favorites;
+    
+    @Autowired
+    public Customer(String email, String password, String name){
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        favorites = new ArrayList<>();
+    }
 }
 

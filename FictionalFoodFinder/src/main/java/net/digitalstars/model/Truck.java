@@ -33,13 +33,13 @@ public class Truck implements Serializable{
     @Column
     private String hours;
     @OneToOne
-    private TruckOwner truckOwner;
+    private Owner owner;
     //private Location location;
     
-    public Truck(String name, TruckOwner truckOwner){
+    public Truck(String name, Owner owner){
         super();
         this.name = name;
-        this.truckOwner = truckOwner;
+        this.owner = owner;
         menu = new ArrayList<>();
         hours = populateHours();
         //location = new Location();

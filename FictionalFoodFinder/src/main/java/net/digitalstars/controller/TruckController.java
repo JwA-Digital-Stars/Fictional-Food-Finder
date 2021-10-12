@@ -2,10 +2,10 @@ package net.digitalstars.controller;
 
 import net.digitalstars.model.Item;
 import net.digitalstars.model.Truck;
-import net.digitalstars.model.TruckOwner;
+import net.digitalstars.model.Owner;
 import net.digitalstars.service.ItemService;
 import net.digitalstars.service.TruckService;
-import net.digitalstars.service.TruckOwnerService;
+import net.digitalstars.service.OwnerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/truck")
 public class TruckController {
     @Autowired 
-    private TruckOwnerService userService;
+    private OwnerService ownerService;
     @Autowired
     private TruckService truckService;
     @Autowired
     private ItemService itemService;
     
     @RequestMapping("/create")
-    public String createTruck(@RequestParam String name, @RequestParam int ownerId){
-        TruckOwner truckOwner = (TruckOwner) userService.getUser(ownerId);
+    public String createTruck(@RequestParam String name, @RequestParam String ownerId){
+        Owner truckOwner = ownerService.findById(ownerId);
         Truck truck = truckService.create(name, truckOwner);
         
         return truck.toString();
