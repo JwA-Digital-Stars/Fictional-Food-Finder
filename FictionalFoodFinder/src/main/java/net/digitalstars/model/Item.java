@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Table(name="item")
 public class Item implements Serializable{
     @Embeddable
-    public class ItemID{
+    public class ItemID implements Serializable{
         @Column
         public String name;
         @OneToOne

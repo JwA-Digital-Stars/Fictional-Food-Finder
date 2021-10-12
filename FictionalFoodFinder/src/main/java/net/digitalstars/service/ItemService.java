@@ -1,15 +1,15 @@
 package net.digitalstars.service;
 
-import com.digitalstars.model.Item;
-import com.digitalstars.model.Item.ItemID;
-import com.digitalstars.model.Truck;
-import com.digitalstars.repository.ItemRepository;
+import net.digitalstars.model.Item;
+import net.digitalstars.model.Item.ItemID;
+import net.digitalstars.model.Truck;
+import net.digitalstars.repository.ItemRepository;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("itemService")
 public class ItemService {
     
     @Autowired

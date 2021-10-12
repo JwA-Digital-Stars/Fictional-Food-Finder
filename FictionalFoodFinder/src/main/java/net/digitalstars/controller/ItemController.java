@@ -1,16 +1,16 @@
 package net.digitalstars.controller;
 
-import com.digitalstars.model.Item;
-import com.digitalstars.model.Truck;
-import com.digitalstars.service.ItemService;
-import com.digitalstars.service.TruckService;
+import net.digitalstars.model.Item;
+import net.digitalstars.model.Truck;
+import net.digitalstars.service.ItemService;
+import net.digitalstars.service.TruckService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("itemController")
 
 @RequestMapping("/item")
 public class ItemController {

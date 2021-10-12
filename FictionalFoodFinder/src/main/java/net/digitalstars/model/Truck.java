@@ -6,8 +6,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
+@EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 
 @Entity
 @Table(name="truck")
@@ -15,58 +28,21 @@ public class Truck implements Serializable{
     @Id
     @Column
     private String name;
-    @Transient
+    @OneToMany
     private List<Item> menu;
     @Column
     private String hours;
     @OneToOne
-    private User truckOwner;
+    private TruckOwner truckOwner;
     //private Location location;
     
-    public Truck(){
-        super();
-    }
-    
-    public Truck(String name, User truckOwner){
+    public Truck(String name, TruckOwner truckOwner){
         super();
         this.name = name;
         this.truckOwner = truckOwner;
         menu = new ArrayList<>();
         hours = populateHours();
-        populateHours();
         //location = new Location();
-    }
-    
-    public String getName(){
-        return name;
-    }
-    
-    public void setName(String name){
-        this.name = name;
-    }
-    
-    public List<Item> getMenu(){
-        return menu;
-    }
-    
-    public void setMenu(List<Item> menu){
-        this.menu = menu;
-    }
-    
-    public String getHours(){
-        return hours;
-    }
-    
-    public void setHours(String hours){
-        this.hours = hours;
-    }
-    
-    public User getOwnerId(){
-        return truckOwner;
-    }
-    
-    public void setOwnerId(User truckOwner){
-        this.truckOwner = truckOwner;
     }
     
     /*
