@@ -22,12 +22,11 @@ public class TruckService {
     
     public String create(Truck truck){
         List<Truck> trucks = findAll();
-        
-        for (Truck t : trucks){
-            if (t.getName().equals(truck.getName()))
-                return "A truck with that name already exists.";
-        }
-        
+        if (!trucks.isEmpty())
+            for (Truck t : trucks)
+                if (t.getName().equals(truck.getName()))
+                    return "A truck with that name already exists.";
+        truck.setOwner(OwnerService.currentOwner);
         truckRepository.save(truck);
         return "Truck successfully added.";
     }

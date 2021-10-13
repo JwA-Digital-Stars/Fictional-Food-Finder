@@ -1,5 +1,6 @@
 package net.digitalstars.controller;
 
+import java.util.List;
 import javax.websocket.server.PathParam;
 import net.digitalstars.model.Item;
 import net.digitalstars.model.Truck;
@@ -32,6 +33,11 @@ public class TruckController {
     @GetMapping(path="/{truck}", produces=MediaType.APPLICATION_JSON_VALUE)
     public Truck findById(@PathParam("truck") String name){
         return truckService.findById(name);
+    }
+    
+    @GetMapping(path="/all", produces=MediaType.APPLICATION_JSON_VALUE)
+    public List<Truck> findAll(){
+        return truckService.findAll();
     }
     
     @PostMapping(path="/{truck}/addItem", consumes=MediaType.APPLICATION_JSON_VALUE)

@@ -13,8 +13,10 @@ public class OwnerService{
     
     @Autowired
     private TruckService truckService;
+    @Autowired
+    private OwnerRepository ownerRepository;
     
-    private final OwnerRepository ownerRepository;
+    public static Owner currentOwner;
     
     @Autowired
     public OwnerService(OwnerRepository ownerRepository){
@@ -22,15 +24,15 @@ public class OwnerService{
         this.ownerRepository = ownerRepository;
     }
     
-    public String create(Owner owner){
+    public boolean create(Owner owner){
         List<Owner> owners = findAll();
         
-        for (Owner o : owners){
-            if (o.getEmail().equals(owner.getEmail()))
-                return "This email already has an account";
+        if (!owners.stream().noneMatch(o -> (o.getEmail().equals(owner.getEmail())))) {
+            return false;
         }
+        
         ownerRepository.save(owner);
-        return "Account successfully created!";
+        return true;
     }
     
     public Owner save(Owner owner){
@@ -47,21 +49,40 @@ public class OwnerService{
     }
     
     public boolean login(String email, String password){
-        Owner owner = findById(email);
-        if (owner == null)
+        if (!isLoggedIn()){
+            currentOwner = findById(email);
+            if (currentOwner == null)
+                return false;
+            if (currentOwner.getPassword().equals(password))
+                return true;
+            currentOwner = null;
+        }
+        return false;
+    }
+    
+    public boolean logout(){
+        if (isLoggedIn())
+            currentOwner = null;
+        else
             return false;
-        return owner.getPassword().equals(password);
+        return true;
     }
     
     public void delete(Owner owner){
         ownerRepository.delete(owner);
     }
     
-    public String addTruck(Owner owner, Truck truck){
-        truckService.save(truck);
-        owner.setTruck(truck);
-        ownerRepository.save(owner);
-        
-        return "Truck added!";
+    public boolean addTruck(String truckName){
+        if (isLoggedIn()){
+            Truck truck = new Truck(truckName, currentOwner);
+            truckService.create(truck);
+            ownerRepository.save(currentOwner);
+            return true;
+        } else
+            return false;
+    }
+    
+    public boolean isLoggedIn(){
+        return currentOwner != null;
     }
 }

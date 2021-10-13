@@ -10,11 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController("ownerController") @RequestMapping("/owner")
 public class OwnerController {
@@ -29,7 +29,12 @@ public class OwnerController {
     
     @PostMapping(path="/create", consumes=MediaType.APPLICATION_JSON_VALUE)
     public String create(@RequestBody Owner owner){
-        return ownerService.create(owner);
+        boolean result = ownerService.create(owner);
+        
+        if (result)
+            return "Owner account successfully created";
+        else
+            return "This email already has an account"; 
     }
     
     @GetMapping(path="/all", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -45,26 +50,34 @@ public class OwnerController {
     }
     
     @GetMapping(path="/login", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ModelAndView login(@RequestParam String email, @RequestParam String password){
+    public String login(@RequestParam String email, @RequestParam String password){
         boolean result = ownerService.login(email, password);
         
         if(result)
-            return new ModelAndView("/id");
+            return "Successful login";
         else
-            return new ModelAndView("/login");
+            return "Invalid login";
     }
     
-    @PostMapping(path="/addTruck", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public String addTruck(@RequestParam String email, @RequestBody String truckName){
-        Owner owner = ownerService.findById(email);
-        String result;
-        if (owner != null){
-            Truck truck = new Truck(truckName, owner);
-            result = ownerService.addTruck(owner, truck);
-        } else
-            result = "Owner cannot be found";
+    @RequestMapping("/logout")
+    public String logout(){
+        boolean result = ownerService.logout();
         
+        if (result)
+            return "Successful logout";
+        else
+            return "Not logged in";
+    }
+    
+    @RequestMapping("/addTruck")
+    public boolean addTruck(@RequestParam String truck_name){
+        boolean result = ownerService.addTruck(truck_name);
+
         return result;
     }
     
+    @RequestMapping("/loggedIn")
+    public boolean loggedIn(){
+        return ownerService.isLoggedIn();
+    }
 }//OwnerController
