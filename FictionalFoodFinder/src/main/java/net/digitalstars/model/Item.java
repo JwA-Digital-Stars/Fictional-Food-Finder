@@ -15,29 +15,22 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Getter
-@Setter
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
-
-@Entity
-@Table(name="item")
+@Getter @Setter
+@ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor
+@Entity @Table(name="item")
 public class Item implements Serializable{
+    @Getter @Setter
+    @ToString @EqualsAndHashCode
+    @NoArgsConstructor @AllArgsConstructor
     @Embeddable
-    @Getter
-    @Setter
-    @ToString
-    @EqualsAndHashCode
-    @NoArgsConstructor
-    @AllArgsConstructor
     public class ItemId implements Serializable{
         @Column
         private String name;
         @OneToOne
         private Truck truck;
-        
     }
+    
     @EmbeddedId
     private ItemId id;
     @Column
@@ -52,10 +45,5 @@ public class Item implements Serializable{
     
     public String menuFormat(){
         return String.format("%s ---- $%.2f", id.getName(), cost);
-    }
-    
-    @Override
-    public String toString(){
-        return String.format("Item(itemName=%s, cost=%.2f, truckId=%s)", id.getName(), cost, id.getTruck().getName());
     }
 }

@@ -14,19 +14,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
-
-@Entity
-@Table(name="truck")
+@Getter @Setter
+@ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor
+@Entity @Table(name="truck")
 public class Truck implements Serializable{
-    @Id
-    @Column
+    @Id @Column
     private String name;
     @OneToMany
     private List<Item> menu;
@@ -36,6 +31,7 @@ public class Truck implements Serializable{
     private Owner owner;
     //private Location location;
     
+    @Autowired
     public Truck(String name, Owner owner){
         super();
         this.name = name;
@@ -76,6 +72,5 @@ public class Truck implements Serializable{
         builder.append(weekend);
         
         return builder.toString();
-        
     }
 }

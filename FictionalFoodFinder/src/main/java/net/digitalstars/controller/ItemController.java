@@ -1,9 +1,7 @@
 package net.digitalstars.controller;
 
 import net.digitalstars.model.Item;
-import net.digitalstars.model.Truck;
 import net.digitalstars.service.ItemService;
-import net.digitalstars.service.TruckService;
 import java.util.List;
 import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("itemController")
-
-@RequestMapping("/item")
+@RestController("itemController") @RequestMapping("/item")
 public class ItemController {
     
     private final ItemService itemService;

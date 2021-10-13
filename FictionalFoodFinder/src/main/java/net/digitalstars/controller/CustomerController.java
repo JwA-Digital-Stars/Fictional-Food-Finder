@@ -4,7 +4,6 @@ import net.digitalstars.model.Customer;
 import net.digitalstars.service.CustomerService;
 import java.util.List;
 import net.digitalstars.model.Truck;
-import net.digitalstars.service.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,18 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("customerController")
-@RequestMapping("/customer")
+@RestController("customerController") @RequestMapping("/customer")
 public class CustomerController {
 
     private final CustomerService customerService;
-    
-    private final TruckService truckService;
-    
+        
     @Autowired
-    public CustomerController(CustomerService customerService, TruckService truckService){
+    public CustomerController(CustomerService customerService){
+        super();
         this.customerService = customerService;
-        this.truckService = truckService;
     }
     
     @PostMapping(path="/create", consumes=MediaType.APPLICATION_JSON_VALUE)

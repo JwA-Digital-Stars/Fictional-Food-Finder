@@ -21,7 +21,18 @@ public class CustomerService{
         this.customerRepository = customerRepository;
     }
     
-    public void create(Customer customer){
+    public String create(Customer customer){
+        List<Customer> customers = findAll();
+        
+        for (Customer c : customers){
+            if (c.getEmail().equals(customer.getEmail()))
+                return "This email already has an account";
+        }
+        customerRepository.save(customer);
+        return "Account successfully created!";
+    }
+    
+    public void save(Customer customer){
         customerRepository.save(customer);
     }
     

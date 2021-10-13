@@ -11,6 +11,9 @@ import net.digitalstars.repository.OwnerRepository;
 @Service("ownerService")
 public class OwnerService{
     
+    @Autowired
+    private TruckService truckService;
+    
     private final OwnerRepository ownerRepository;
     
     @Autowired
@@ -19,8 +22,19 @@ public class OwnerService{
         this.ownerRepository = ownerRepository;
     }
     
-    public void create(Owner owner){
+    public String create(Owner owner){
+        List<Owner> owners = findAll();
+        
+        for (Owner o : owners){
+            if (o.getEmail().equals(owner.getEmail()))
+                return "This email already has an account";
+        }
         ownerRepository.save(owner);
+        return "Account successfully created!";
+    }
+    
+    public Owner save(Owner owner){
+        return ownerRepository.save(owner);
     }
     
     public List<Owner> findAll(){
@@ -43,8 +57,11 @@ public class OwnerService{
         ownerRepository.delete(owner);
     }
     
-    public void addTruck(Owner owner, Truck truck){
+    public String addTruck(Owner owner, Truck truck){
+        truckService.save(truck);
         owner.setTruck(truck);
         ownerRepository.save(owner);
+        
+        return "Truck added!";
     }
 }

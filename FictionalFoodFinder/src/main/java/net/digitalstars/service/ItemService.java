@@ -23,10 +23,17 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
     
+    public String create(Item item){
+        List<Item> items = findAll();
+        for (Item i : items){
+            if (i.getId() == item.getId())
+                return "This item already exists";
+        }
+        itemRepository.save(item);
+        return "Item added!";
+    }
+    
     public Item save(Item item) {
-        Truck truck = truckService.findById(item.getId().getTruck().getName());
-        if (truck == null)
-            return null;
         return itemRepository.save(item);
     }
     
