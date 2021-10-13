@@ -15,6 +15,8 @@ public class CustomerService{
     @Autowired
     private TruckService truckService;
     
+    public static Customer currentCustomer;
+    
     @Autowired
     public CustomerService(CustomerRepository customerRepository){
         super();
@@ -46,34 +48,60 @@ public class CustomerService{
     }
     
     public boolean login(String email, String password){
-        Customer customer = findById(email);        
-        return customer != null;
+        if (!isLoggedIn()){
+            currentCustomer = findById(email);
+            if (currentCustomer == null)
+                return false;
+            if (currentCustomer.getPassword().equals(password))
+                return true;
+            currentCustomer = null;
+        }
+        return false;
     }
     
-    public boolean addFavorite(Customer customer, String truckName){
-        Truck truck = truckService.findById(truckName);
-        if (customer.getFavorites().contains(truck))
+    public boolean logout(){
+        if (isLoggedIn())
+            currentCustomer = null;
+        else
             return false;
         
-        customer.getFavorites().add(truck);
-        
-        customerRepository.save(customer);
         return true;
     }
     
-    public boolean removeFavorite(Customer customer, String truckName){
-        Truck truck = truckService.findById(truckName);
-        if (!customer.getFavorites().contains(truck))
-            return false;
-            
-        customer.getFavorites().remove(truck);
-        
-        customerRepository.save(customer);
-        return true;
+    public boolean addFavorite(String truckName){
+        if (isLoggedIn()){
+            Truck truck = truckService.findById(truckName);
+            if (currentCustomer.getFavorites().contains(truck))
+                return false;
+
+            currentCustomer.getFavorites().add(truck);
+
+            customerRepository.save(currentCustomer);
+            return true;
+        }
+        return false;
+    }
+    
+    public boolean removeFavorite(String truckName){
+        if (isLoggedIn()){
+            Truck truck = truckService.findById(truckName);
+            if (!currentCustomer.getFavorites().contains(truck))
+                return false;
+
+            currentCustomer.getFavorites().remove(truck);
+
+            customerRepository.save(currentCustomer);
+            return true;
+        }
+        return false;
     }
     
     public void delete(Customer customer){
         customerRepository.delete(customer);
+    }
+    
+    public boolean isLoggedIn(){
+        return currentCustomer != null;
     }
 
 }

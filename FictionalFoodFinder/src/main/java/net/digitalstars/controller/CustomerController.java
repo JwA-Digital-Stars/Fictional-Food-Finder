@@ -48,26 +48,34 @@ public class CustomerController {
         boolean result = customerService.login(email, password);
         
         if(result)
-            return "Successful login!";
+            return "Successful login";
         else
             return "Invalid login";
     }
     
-    @PostMapping(path="/addFavorite", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public List<Truck> addFavorite(@RequestParam String email, @RequestParam String truckName){
-        Customer customer = customerService.findById(email);
-        customerService.addFavorite(customer, truckName);
+    @RequestMapping("/logout")
+    public String logout(){
+        boolean result = customerService.logout();
         
-        return customer.getFavorites();
+        if (result)
+            return "Successful logout";
+        else
+            return "Not logged in";
+    }
+    
+    @PostMapping(path="/addFavorite", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public List<Truck> addFavorite(@RequestParam String truckName){
+        customerService.addFavorite(truckName);
+        
+        return CustomerService.currentCustomer.getFavorites();
     }
     
     @PostMapping(path="/removeFavorite", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public List<Truck> removeFavorite(@RequestParam String email, @RequestParam String truckName){
-        Customer customer = customerService.findById(email);
+    public List<Truck> removeFavorite(@RequestParam String truckName){
         
-        customerService.removeFavorite(customer, truckName);
+        customerService.removeFavorite(truckName);
         
-        return customer.getFavorites();
+        return CustomerService.currentCustomer.getFavorites();
     }
         
 }//CustomerController
