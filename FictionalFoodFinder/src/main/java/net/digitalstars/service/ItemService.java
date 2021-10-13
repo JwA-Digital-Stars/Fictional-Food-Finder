@@ -1,7 +1,7 @@
 package net.digitalstars.service;
 
 import net.digitalstars.model.Item;
-import net.digitalstars.model.Item.ItemID;
+import net.digitalstars.model.Item.ItemId;
 import net.digitalstars.model.Truck;
 import net.digitalstars.repository.ItemRepository;
 import java.util.List;
@@ -13,38 +13,58 @@ import org.springframework.stereotype.Service;
 public class ItemService {
     
     @Autowired
-    private ItemRepository itemRepo;
+    private TruckService truckService;
     
-    public Item create(String itemName, float cost, Truck truck) {
-        return itemRepo.save(new Item(itemName, cost, truck));
+    private final ItemRepository itemRepository;
+    
+    @Autowired
+    public ItemService(ItemRepository itemRepository){
+        super();
+        this.itemRepository = itemRepository;
     }
     
-    public List<Item> getItems(){
-        return itemRepo.findAll();
+    public Item save(Item item) {
+        Truck truck = truckService.findById(item.getId().getTruck().getName());
+        if (truck == null)
+            return null;
+        return itemRepository.save(item);
+    }
+    
+    public List<Item> findAll(){
+        return itemRepository.findAll();
     }
     
     public List<Item> getItems(Truck truck){
-        List<Item> items = itemRepo.findAll();
+        List<Item> items = itemRepository.findAll();
         
-        items.stream().filter(i -> (i.getTruck() != truck)).forEachOrdered(i -> {
+        items.stream().filter(i -> (i.getId().getTruck() != truck)).forEachOrdered(i -> {
             items.remove(i);
         });
         
         return items;
     }
     
-    public Item getItem(ItemID id){
-        Optional<Item> itemOp = itemRepo.findById(id);
+    public Item findById(ItemId id){
+        Optional<Item> itemOp = itemRepository.findById(id);
+        return itemOp.orElse(null);
+    }
+    
+    public Item findById(String itemName, String truckName){
+        Truck truck = truckService.findById(itemName);
+        if (truck == null)
+            return null;
+        Item item = new Item(itemName, truck);
+        Optional<Item> itemOp = itemRepository.findById(item.getId());
         return itemOp.orElse(null);
     }
     
     public void delete(Item item){
-        itemRepo.delete(item);
+        itemRepository.delete(item);
     }
     
     public Item updateCost(Item item, float newCost){
         item.setCost(newCost);
-        itemRepo.save(item);
+        itemRepository.save(item);
         return item;
     }
 

@@ -5,7 +5,12 @@ import net.digitalstars.model.Truck;
 import net.digitalstars.service.ItemService;
 import net.digitalstars.service.TruckService;
 import java.util.List;
+import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,30 +20,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/item")
 public class ItemController {
     
+    private final ItemService itemService;
+    
     @Autowired
-    private ItemService itemService;
-    @Autowired
-    private TruckService truckService;
+    public ItemController(ItemService itemService){
+        super();
+        this.itemService = itemService;
+    }
 
-    @RequestMapping("/create")
-    public String create(@RequestParam String itemName, @RequestParam float cost, @RequestParam String truckName){
-        Truck truck = truckService.getTruck(truckName);
-        Item item = itemService.create(itemName, cost, truck);
+    @PostMapping(path="/create", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public String create(@RequestBody Item item){
+        itemService.save(item);
         return item.toString();
     }
     
-    @RequestMapping("/all")
-    public List<Item> getItems(){
-        return itemService.getItems();
+    @GetMapping(path="/all", produces=MediaType.APPLICATION_JSON_VALUE)
+    public List<Item> findAll(){
+        return itemService.findAll();
     }
     
-    @RequestMapping("/{truckId}/{itemName}")
-    public void getItem(@RequestParam String itemName, @RequestParam String truckId){
+    @GetMapping(path="/{item}/{truck}")
+    public Item getItem(@PathParam("item") String itemName, @PathParam("truck") String truckName){
+        Item item = itemService.findById(itemName, truckName);
         
+        return item;
     }
     
-    @RequestMapping("/delete/item")
-    public void delete(@RequestParam String itemName){
+    @PostMapping(path="/delete", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public void delete(@RequestParam String itemName, @RequestParam String truckName){
+        Item item = itemService.findById(itemName, truckName);
         
+        itemService.delete(item);
     }
 }//ItemController
