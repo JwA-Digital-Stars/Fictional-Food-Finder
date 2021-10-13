@@ -1,9 +1,8 @@
 package net.digitalstars.model;
+
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -15,18 +14,13 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter
+@ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor
 
-@Entity
-@Table(name="owner")
+@Entity @Table(name="owner")
 public class Owner implements Serializable{
-    @Id
-    @Column
+    @Id @Column
     private String email;
     @Column
     private String password;
@@ -42,6 +36,5 @@ public class Owner implements Serializable{
         this.name = name;
         truck = new Truck();
     }
-    
 }
 

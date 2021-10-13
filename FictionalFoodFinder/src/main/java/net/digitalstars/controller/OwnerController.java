@@ -3,42 +3,33 @@ package net.digitalstars.controller;
 import net.digitalstars.model.Owner;
 import net.digitalstars.service.OwnerService;
 import java.util.List;
+import net.digitalstars.model.Truck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
-@RestController("ownerController")
-@RequestMapping("/owner")
+@RestController("ownerController") @RequestMapping("/owner")
 public class OwnerController {
 
     private final OwnerService ownerService;
-    
-    //private final TruckService truckService;
-    
+            
     @Autowired
     public OwnerController(OwnerService ownerService){
+        super();
         this.ownerService = ownerService;
-        //this.truckService = truckService;
     }
     
-//    @PostMapping(path="/create", consumes=MediaType.APPLICATION_JSON_VALUE)
-//    public void create(@RequestParam String email, @RequestParam String password, @RequestParam String name, @RequestParam String type){
-//        usersService.create(email, password, name, type);
-//    }
-    
     @PostMapping(path="/create", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public void create(@RequestBody Owner owner){
-        ownerService.create(owner);
+    public String create(@RequestBody Owner owner){
+        return ownerService.create(owner);
     }
     
     @GetMapping(path="/all", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -46,50 +37,34 @@ public class OwnerController {
         return new ResponseEntity<>(this.ownerService.findAll(), HttpStatus.OK); 
     }
     
-    @RequestMapping("/id")
+    @GetMapping(path="/id", produces=MediaType.APPLICATION_JSON_VALUE)
     public String findById(@RequestParam String email){
         Owner owner = ownerService.findById(email);
         System.out.println(owner);
         return owner.toString();
     }
     
-    @RequestMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password){
+    @GetMapping(path="/login", produces=MediaType.APPLICATION_JSON_VALUE)
+    public ModelAndView login(@RequestParam String email, @RequestParam String password){
         boolean result = ownerService.login(email, password);
         
         if(result)
-            return "Successful login!";
+            return new ModelAndView("/id");
         else
-            return "Invalid login";
+            return new ModelAndView("/login");
     }
     
-//    @RequestMapping("/customer/addFavorite")
-//    public List<Truck> addFavorite(@RequestParam int id, @RequestParam String truckId){
-//        Users user = userService.getUser(id);
-//        Truck truck = truckService.getTruck(truckId);
-//        userService.addFavorite((Customer) user, truck);
-//        
-//        return userService.getFavorites(id);
-//    }
-//    
-//    @RequestMapping("/customer/removeFavorite")
-//    public List<Truck> removeFavorite(@RequestParam int id, @RequestParam String truckId){
-//        Users user = userService.getUser(id);
-//        Truck truck = truckService.getTruck(truckId);
-//        
-//        userService.removeFavorite((Customer) user, truck);
-//        
-//        return userService.getFavorites(id);
-//    }
-//    
-//    @RequestMapping("/owner/addTruck")
-//    public void addTruck(@RequestParam int id, @RequestParam String truckName){
-//        Owner owner = (Owner) userService.getUser(id);
-//        
-//        if (owner != null){
-//            Truck truck = truckService.create(truckName, owner);
-//            userService.addTruck(owner, truck);
-//        }
-//    }
+    @PostMapping(path="/addTruck", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public String addTruck(@RequestParam String email, @RequestBody String truckName){
+        Owner owner = ownerService.findById(email);
+        String result;
+        if (owner != null){
+            Truck truck = new Truck(truckName, owner);
+            result = ownerService.addTruck(owner, truck);
+        } else
+            result = "Owner cannot be found";
+        
+        return result;
+    }
     
-}//UserController
+}//OwnerController

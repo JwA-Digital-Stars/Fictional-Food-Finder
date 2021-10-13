@@ -11,15 +11,28 @@ import net.digitalstars.repository.CustomerRepository;
 @Service("customerService")
 public class CustomerService{
     
+    private final CustomerRepository customerRepository;
     @Autowired
-    private CustomerRepository customerRepository;
+    private TruckService truckService;
     
     @Autowired
-    public CustomerService(){
+    public CustomerService(CustomerRepository customerRepository){
         super();
+        this.customerRepository = customerRepository;
     }
     
-    public void create(Customer customer){
+    public String create(Customer customer){
+        List<Customer> customers = findAll();
+        
+        for (Customer c : customers){
+            if (c.getEmail().equals(customer.getEmail()))
+                return "This email already has an account";
+        }
+        customerRepository.save(customer);
+        return "Account successfully created!";
+    }
+    
+    public void save(Customer customer){
         customerRepository.save(customer);
     }
     
@@ -37,7 +50,8 @@ public class CustomerService{
         return customer != null;
     }
     
-    public boolean addFavorite(Customer customer, Truck truck){
+    public boolean addFavorite(Customer customer, String truckName){
+        Truck truck = truckService.findById(truckName);
         if (customer.getFavorites().contains(truck))
             return false;
         
@@ -47,7 +61,8 @@ public class CustomerService{
         return true;
     }
     
-    public boolean removeFavorite(Customer customer, Truck truck){        
+    public boolean removeFavorite(Customer customer, String truckName){
+        Truck truck = truckService.findById(truckName);
         if (!customer.getFavorites().contains(truck))
             return false;
             
@@ -61,7 +76,4 @@ public class CustomerService{
         customerRepository.delete(customer);
     }
 
-    public List<Truck> getFavorites(int id) {
-        return null;
-    }
 }

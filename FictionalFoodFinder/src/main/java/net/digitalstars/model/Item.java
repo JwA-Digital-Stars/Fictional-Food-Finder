@@ -7,70 +7,43 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Entity
-@Table(name="item")
+@Getter @Setter
+@ToString @EqualsAndHashCode
+@NoArgsConstructor @AllArgsConstructor
+@Entity @Table(name="item")
 public class Item implements Serializable{
+    @Getter @Setter
+    @ToString @EqualsAndHashCode
+    @NoArgsConstructor @AllArgsConstructor
     @Embeddable
-    public class ItemID implements Serializable{
+    public class ItemId implements Serializable{
         @Column
-        public String name;
+        private String name;
         @OneToOne
-        public Truck truck;
-        
-        public ItemID(){
-            super();
-        }
-        
-        public ItemID(String itemName, Truck truck){
-            super();
-            name = itemName;
-            this.truck = truck;
-        }
+        private Truck truck;
     }
+    
     @EmbeddedId
-    private ItemID id;
+    private ItemId id;
     @Column
     private float cost;
     
-    public Item(){
+    @Autowired
+    public Item(String name, Truck truck){
         super();
-        id = new ItemID();
-        cost = 0;
+        id.setName(name);
+        id.setTruck(truck);
     }
     
-    public Item(String name, float cost, Truck truck){
-        super();
-        id = new ItemID(name, truck);
-        this.cost = cost;
-    }
-    
-    public String getName(){
-        return id.name;
-    }
-    
-    public void setName(String name){
-        id.name = name;
-    }
-    
-    public float getCost(){
-        return cost;
-    }
-    
-    public void setCost(float cost){
-        this.cost = cost;
-    }
-    
-    public Truck getTruck(){
-        return id.truck;
-    }
-    
-    public void setTruckId(Truck truck){
-        id.truck = truck;
-    }
-    
-    @Override
-    public String toString(){
-        return String.format("Item(itemName=%s, cost=%.2f, truckId=%s)", id.name, cost, id.truck.getName());
+    public String menuFormat(){
+        return String.format("%s ---- $%.2f", id.getName(), cost);
     }
 }
