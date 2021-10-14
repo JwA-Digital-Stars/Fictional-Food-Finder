@@ -49,7 +49,7 @@ public class OwnerController {
         return owner.toString();
     }
     
-    @GetMapping(path="/login", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path="/login", produces=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String login(@RequestParam String email, @RequestParam String password){
         boolean result = ownerService.login(email, password);
         

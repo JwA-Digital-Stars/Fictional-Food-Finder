@@ -21,7 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 @NoArgsConstructor @AllArgsConstructor
 @Entity @Table(name="truck")
 public class Truck implements Serializable{
-    @Id @Column
+
+    @Id @Column 
     private String name;
     @OneToMany
     private List<Item> menu;
@@ -39,6 +40,38 @@ public class Truck implements Serializable{
         menu = new ArrayList<>();
         hours = populateHours();
         //location = new Location();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Item> getMenu() {
+        return menu;
+    }
+
+    public void setMenu(List<Item> menu) {
+        this.menu = menu;
+    }
+
+    public String getHours() {
+        return hours;
+    }
+
+    public void setHours(String hours) {
+        this.hours = hours;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
     
     /*
