@@ -8,13 +8,13 @@ import javax.persistence.Table;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter @Setter
 @ToString @EqualsAndHashCode
@@ -24,20 +24,16 @@ public class Truck implements Serializable{
 
     @Id @Column 
     private String name;
-    @OneToMany
-    private List<Item> menu;
     @Column
     private String hours;
     @OneToOne
     private Owner owner;
     //private Location location;
     
-    @Autowired
     public Truck(String name, Owner owner){
         super();
         this.name = name;
         this.owner = owner;
-        menu = new ArrayList<>();
         hours = populateHours();
         //location = new Location();
     }
@@ -48,14 +44,6 @@ public class Truck implements Serializable{
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<Item> getMenu() {
-        return menu;
-    }
-
-    public void setMenu(List<Item> menu) {
-        this.menu = menu;
     }
 
     public String getHours() {

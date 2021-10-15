@@ -43,7 +43,7 @@ public class CustomerController {
         return customer.toString();
     }
     
-    @GetMapping(path="/login", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path="/login", produces=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public String login(@RequestParam String email, @RequestParam String password){
         boolean result = customerService.login(email, password);
         
@@ -63,19 +63,19 @@ public class CustomerController {
             return "Not logged in";
     }
     
-    @PostMapping(path="/addFavorite", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path="/addFavorite", consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public List<Truck> addFavorite(@RequestParam String truckName){
         customerService.addFavorite(truckName);
         
-        return CustomerService.currentCustomer.getFavorites();
+        return customerService.getCurrentCustomer().getFavorites();
     }
     
-    @PostMapping(path="/removeFavorite", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path="/removeFavorite", consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public List<Truck> removeFavorite(@RequestParam String truckName){
         
         customerService.removeFavorite(truckName);
         
-        return CustomerService.currentCustomer.getFavorites();
+        return customerService.getCurrentCustomer().getFavorites();
     }
         
 }//CustomerController

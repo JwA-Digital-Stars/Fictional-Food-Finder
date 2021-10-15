@@ -37,6 +37,22 @@ public class OwnerController {
             return "This email already has an account"; 
     }
     
+    @PostMapping(path="/create/all", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public String[] create(@RequestBody Owner[] owners){
+        String[] response = new String[owners.length];
+        
+        for (int i = 0; i < owners.length; i++){
+            boolean result = ownerService.create(owners[i]);
+            
+            if (result)
+                response[i] = "Owner account successfully created";
+            else
+                response[i] = "This email already has an account";
+        }
+        
+        return response;
+    }
+    
     @GetMapping(path="/all", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Owner>> findAll(){
         return new ResponseEntity<>(this.ownerService.findAll(), HttpStatus.OK); 
@@ -69,7 +85,7 @@ public class OwnerController {
             return "Not logged in";
     }
     
-    @RequestMapping("/addTruck")
+    @PostMapping(path="/addTruck", consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public boolean addTruck(@RequestParam String truck_name){
         boolean result = ownerService.addTruck(truck_name);
 

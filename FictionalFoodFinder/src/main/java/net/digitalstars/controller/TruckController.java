@@ -41,40 +41,39 @@ public class TruckController {
     }
     
     @PostMapping(path="/{truck}/addItem", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public String addItem(@PathParam("truck") String name, @RequestBody Item item){
-        Truck truck = truckService.findById(name);
+    public String addItem(@PathParam("truck") String truckName, @RequestParam String name, @RequestParam float cost){
+        Truck truck = truckService.findById(truckName);
         if (truck == null)
             return "No truck found.";
         
-        boolean result = truckService.addItem(truck, item);
+        boolean result = truckService.addItem(name, cost);
         
         if (result)
-            return String.format("%s added to %s truck.", item.getId().getName(), truck.getName());
+            return String.format("%s added to %s truck.", name, truck.getName());
         else
             return "Could not add item.";
     }
     
-    @PostMapping(path="/{truck}/remove/{item}", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public String removeItem(@PathParam("truck") String name, @PathParam("item") String itemName){
+    @PostMapping(path="/{truck}/remove/{id}", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public String removeItem(@PathParam("truck") String name, @PathParam("id") int id){
         Truck truck = truckService.findById(name);
         if (truck == null)
             return "No truck found.";
-        boolean result = truckService.removeItem(truck, itemName);
+        boolean result = truckService.removeItem(truck, id);
         
         if (result)
-            return String.format("%s removed from %s truck.", itemName, truck.getName());
+            return String.format("Removed item from %s truck.", truck.getName());
         else
             return "Could not remove item.";
     }
     
     @GetMapping(path="/{truckName}/menu", produces=MediaType.APPLICATION_JSON_VALUE)
-    public String getMenu(@RequestParam String truckName){
+    public List<Item> getMenu(@RequestParam String truckName){
         Truck truck = truckService.findById(truckName);
         
         if (truck == null)
-            return "Error 404: Truck not found.";
+            return null;
         
-        String menu = truckService.menu(truck);
-        return menu;
+        return truckService.getMenu(truck);
     }
 }//TruckController

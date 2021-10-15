@@ -16,12 +16,20 @@ public class OwnerService{
     @Autowired
     private OwnerRepository ownerRepository;
     
-    public static Owner currentOwner;
+    private Owner currentOwner;
     
     @Autowired
     public OwnerService(OwnerRepository ownerRepository){
         super();
         this.ownerRepository = ownerRepository;
+    }
+    
+    public Owner getCurrentOwner(){
+        return currentOwner;
+    }
+    
+    public void setCurrentOwner(Owner owner){
+        currentOwner = owner;
     }
     
     public boolean create(Owner owner){

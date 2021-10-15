@@ -1,7 +1,6 @@
 package net.digitalstars.service;
 
 import net.digitalstars.model.Item;
-import net.digitalstars.model.Item.ItemId;
 import net.digitalstars.model.Truck;
 import net.digitalstars.repository.ItemRepository;
 import java.util.List;
@@ -44,25 +43,20 @@ public class ItemService {
     public List<Item> getItems(Truck truck){
         List<Item> items = itemRepository.findAll();
         
-        items.stream().filter(i -> (i.getId().getTruck() != truck)).forEachOrdered(i -> {
+        items.stream().filter(i -> (i.getTruck() != truck)).forEachOrdered(i -> {
             items.remove(i);
         });
         
         return items;
     }
     
-    public Item findById(ItemId id){
+    public Item findById(int id){
         Optional<Item> itemOp = itemRepository.findById(id);
         return itemOp.orElse(null);
     }
     
-    public Item findById(String itemName, String truckName){
-        Truck truck = truckService.findById(itemName);
-        if (truck == null)
-            return null;
-        Item item = new Item(itemName, truck);
-        Optional<Item> itemOp = itemRepository.findById(item.getId());
-        return itemOp.orElse(null);
+    public List<Item> findByTruckName(Truck truck){
+        return itemRepository.findByTruckName(truck.getName());
     }
     
     public void delete(Item item){

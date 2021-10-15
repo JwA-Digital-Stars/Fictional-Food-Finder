@@ -12,7 +12,10 @@ public class TruckService {
 
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private OwnerService ownerService;
     private final TruckRepository truckRepository;
+    public static Truck currentTruck;
     
     @Autowired
     public TruckService(TruckRepository truckRepository){
@@ -26,7 +29,7 @@ public class TruckService {
             for (Truck t : trucks)
                 if (t.getName().equals(truck.getName()))
                     return "A truck with that name already exists.";
-        truck.setOwner(OwnerService.currentOwner);
+        truck.setOwner(ownerService.getCurrentOwner());
         truckRepository.save(truck);
         return "Truck successfully added.";
     }
@@ -43,33 +46,25 @@ public class TruckService {
         return truckRepository.findAll();
     }
     
-    public boolean addItem(Truck truck, Item item){        
-        if (truck == null)
+    public boolean addItem(String name, float cost){        
+        if (currentTruck == null)
             return false;
-        if (item.getId().getTruck() != truck)
-            return false;
-        if (!truck.getMenu().stream().noneMatch(i -> (i.getId() == item.getId()))) {
-            return false;
-        }
+        Item item = new Item(name, cost, currentTruck);
         
         itemService.create(item);
-        truck.getMenu().add(item);
-        truckRepository.save(truck);
         return true;
     }
     
-    public boolean removeItem(Truck truck, String itemName){
+    public boolean removeItem(Truck truck, int id){
         
         if (truck == null)
             return false;
         
-        Item item = new Item(itemName, truck);
-        item = itemService.findById(item.getId());
+        Item item = itemService.findById(id);
         
         if (item == null)
             return false;
         
-        truck.getMenu().remove(item);
         itemService.delete(item);
         truckRepository.save(truck);
         return true;
@@ -79,17 +74,8 @@ public class TruckService {
         truckRepository.delete(truck);
     }
     
-    public String menu(Truck truck){
-        StringBuilder menuBuilder = new StringBuilder();
-        
-        truck.getMenu().stream().map(i -> {
-            menuBuilder.append(i.menuFormat());
-            return i;
-        }).forEachOrdered(_item -> {
-            menuBuilder.append("\n");
-        });
-        
-        return menuBuilder.toString();
+    public List<Item> getMenu(Truck truck){
+        return itemService.findByTruckName(truck);
     }
-    
+        
 }//TruckService

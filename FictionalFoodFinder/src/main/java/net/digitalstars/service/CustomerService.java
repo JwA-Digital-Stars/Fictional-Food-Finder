@@ -15,12 +15,20 @@ public class CustomerService{
     @Autowired
     private TruckService truckService;
     
-    public static Customer currentCustomer;
+    private Customer currentCustomer;
     
     @Autowired
     public CustomerService(CustomerRepository customerRepository){
         super();
         this.customerRepository = customerRepository;
+    }
+
+    public Customer getCurrentCustomer() {
+        return currentCustomer;
+    }
+
+    public void setCurrentCustomer(Customer customer) {
+        currentCustomer = customer;
     }
     
     public String create(Customer customer){
