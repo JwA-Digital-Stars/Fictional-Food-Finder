@@ -17,6 +17,7 @@ public class OwnerService{
     private OwnerRepository ownerRepository;
     
     private Owner currentOwner;
+    private Truck truck;
     
     @Autowired
     public OwnerService(OwnerRepository ownerRepository){
@@ -61,8 +62,10 @@ public class OwnerService{
             currentOwner = findById(email);
             if (currentOwner == null)
                 return false;
-            if (currentOwner.getPassword().equals(password))
+            if (currentOwner.getPassword().equals(password)){
+                truckService.setCurrentTruck(truck);
                 return true;
+            }
             currentOwner = null;
         }
         return false;
@@ -83,7 +86,7 @@ public class OwnerService{
     public boolean addTruck(String truckName){
         if (isLoggedIn()){
             Truck truck = new Truck(truckName, currentOwner);
-            truckService.create(truck);
+            this.truck = truckService.create(truck);
             ownerRepository.save(currentOwner);
             return true;
         } else

@@ -26,13 +26,13 @@ public class TruckController {
     }
     
     @PostMapping(path="/create", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public String create(@RequestBody Truck truck){
+    public Truck create(@RequestBody Truck truck){
         return truckService.create(truck);
     }
     
-    @GetMapping(path="/{truck}", produces=MediaType.APPLICATION_JSON_VALUE)
-    public Truck findById(@PathParam("truck") String name){
-        return truckService.findById(name);
+    @GetMapping(path="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public Truck findById(@RequestParam String id){
+        return truckService.findById(id);
     }
     
     @GetMapping(path="/all", produces=MediaType.APPLICATION_JSON_VALUE)
@@ -40,17 +40,14 @@ public class TruckController {
         return truckService.findAll();
     }
     
-    @PostMapping(path="/{truck}/addItem", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public String addItem(@PathParam("truck") String truckName, @RequestBody String[] itemInfo){
-        Truck truck = truckService.findById(truckName);
-        if (truck == null)
-            return "No truck found.";
+    @PostMapping(path="/truck/addItem", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public String addItem(@RequestBody String[] itemInfo){
         String name = itemInfo[0];
         float cost = Float.parseFloat(itemInfo[1]);
         boolean result = truckService.addItem(name, cost);
         
         if (result)
-            return String.format("%s added to %s truck.", name, truck.getName());
+            return String.format("%s added to truck.", name);
         else
             return "Could not add item.";
     }
