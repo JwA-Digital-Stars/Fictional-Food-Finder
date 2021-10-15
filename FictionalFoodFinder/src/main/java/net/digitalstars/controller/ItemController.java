@@ -35,16 +35,16 @@ public class ItemController {
         return itemService.findAll();
     }
     
-    @GetMapping(path="/{item}/{truck}")
-    public Item getItem(@PathParam("item") String itemName, @PathParam("truck") String truckName){
-        Item item = itemService.findById(itemName, truckName);
+    @GetMapping(path="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+    public Item getItem(@PathParam("id") int id){
+        Item item = itemService.findById(id);
         
         return item;
     }
     
     @PostMapping(path="/delete", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public void delete(@RequestParam String itemName, @RequestParam String truckName){
-        Item item = itemService.findById(itemName, truckName);
+    public void delete(@RequestParam int id){
+        Item item = itemService.findById(id);
         
         itemService.delete(item);
     }
