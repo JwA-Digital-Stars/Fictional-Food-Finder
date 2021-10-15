@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Entity @Table(name="truck")
 public class Truck implements Serializable{
 
-    @Id @Column 
+    @Id
     private String name;
     @Column
     private String hours;
