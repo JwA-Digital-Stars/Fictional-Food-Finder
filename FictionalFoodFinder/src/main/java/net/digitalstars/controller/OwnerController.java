@@ -85,7 +85,7 @@ public class OwnerController {
             return "Not logged in";
     }
     
-    @PostMapping(path="/addTruck", consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    @RequestMapping("/addTruck")
     public boolean addTruck(@RequestParam String truck_name){
         boolean result = ownerService.addTruck(truck_name);
 

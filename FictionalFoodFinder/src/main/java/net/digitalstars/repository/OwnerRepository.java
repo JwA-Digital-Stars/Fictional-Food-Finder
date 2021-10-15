@@ -7,4 +7,4 @@ import org.springframework.stereotype.Repository;
 @Repository("ownerRepository")
 public interface OwnerRepository extends JpaRepository<Owner, String>{
     
-}//UserRepository
+}//OwnerRepository

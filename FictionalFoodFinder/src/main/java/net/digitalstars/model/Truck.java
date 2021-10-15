@@ -15,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Getter @Setter
 @ToString @EqualsAndHashCode
@@ -30,6 +31,7 @@ public class Truck implements Serializable{
     private Owner owner;
     //private Location location;
     
+    @Autowired
     public Truck(String name, Owner owner){
         super();
         this.name = name;

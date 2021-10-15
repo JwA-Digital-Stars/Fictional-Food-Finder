@@ -41,11 +41,12 @@ public class TruckController {
     }
     
     @PostMapping(path="/{truck}/addItem", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public String addItem(@PathParam("truck") String truckName, @RequestParam String name, @RequestParam float cost){
+    public String addItem(@PathParam("truck") String truckName, @RequestBody String[] itemInfo){
         Truck truck = truckService.findById(truckName);
         if (truck == null)
             return "No truck found.";
-        
+        String name = itemInfo[0];
+        float cost = Float.parseFloat(itemInfo[1]);
         boolean result = truckService.addItem(name, cost);
         
         if (result)
