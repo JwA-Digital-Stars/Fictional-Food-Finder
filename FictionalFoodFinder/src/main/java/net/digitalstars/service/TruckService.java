@@ -1,6 +1,7 @@
 package net.digitalstars.service;
 
 import java.util.List;
+import java.util.Optional;
 import net.digitalstars.model.Item;
 import net.digitalstars.model.Truck;
 import net.digitalstars.repository.TruckRepository;
@@ -39,7 +40,9 @@ public class TruckService {
     }
     
     public Truck findById(String name){
-        return truckRepository.findById(name).orElse(null);
+        Optional<Truck> truckOp = truckRepository.findById(name);
+        
+        return truckOp.orElse(null);
     }
     
     public List<Truck> findAll(){

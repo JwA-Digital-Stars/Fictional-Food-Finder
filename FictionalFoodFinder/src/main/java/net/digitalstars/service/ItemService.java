@@ -11,9 +11,6 @@ import org.springframework.stereotype.Service;
 @Service("itemService")
 public class ItemService {
     
-    @Autowired
-    private TruckService truckService;
-    
     private final ItemRepository itemRepository;
     
     @Autowired
@@ -50,7 +47,7 @@ public class ItemService {
         return items;
     }
     
-    public Item findById(int id){
+    public Item findById(long id){
         Optional<Item> itemOp = itemRepository.findById(id);
         return itemOp.orElse(null);
     }

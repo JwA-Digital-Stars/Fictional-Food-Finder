@@ -4,11 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,8 +23,10 @@ import lombok.ToString;
 @Entity @Table(name="item")
 public class Item implements Serializable{
 
-    @Id @Column
-    private int id;
+    @Id
+    @GeneratedValue(generator="item_id_seq",strategy=GenerationType.IDENTITY)
+    @SequenceGenerator(allocationSize=1, name="request_id_seq", sequenceName="request_id_seq")
+    private long id;
     @Column
     private String name;
     @Column
@@ -33,16 +36,17 @@ public class Item implements Serializable{
     
     public Item(String name, float cost, Truck truck){
         super();
+        id = 0;
         this.name = name;
         this.cost = cost;
         this.truck = truck;
     }
     
-    public int getId(){
+    public long getId(){
         return id;
     }
     
-    public void setId(int id){
+    public void setId(long id){
         this.id = id;
     }
     

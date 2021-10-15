@@ -74,7 +74,5 @@ public class Customer implements Serializable{
         this.favorites = favorites;
     }
     
-    
-    
 }
 
