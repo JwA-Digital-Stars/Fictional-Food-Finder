@@ -1,8 +1,6 @@
 package net.digitalstars.controller;
 
 import java.util.List;
-import javax.websocket.server.PathParam;
-import net.digitalstars.model.Item;
 import net.digitalstars.model.Truck;
 import net.digitalstars.service.TruckService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@CrossOrigin(origins="http://localhost:4200")
 @RestController("truckController") @RequestMapping("/truck")
-@CrossOrigin(origins="http://localhost:8080")
 public class TruckController {
     
     private final TruckService truckService;
