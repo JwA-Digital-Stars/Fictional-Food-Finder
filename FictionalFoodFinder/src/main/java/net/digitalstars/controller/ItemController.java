@@ -36,16 +36,14 @@ public class ItemController {
     }
     
     @GetMapping(path="/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-    public Item getItem(@PathParam("id") long id){
+    public Item getItem(@PathParam("id") int id){
         Item item = itemService.findById(id);
         
         return item;
     }
     
     @PostMapping(path="/delete", consumes=MediaType.APPLICATION_JSON_VALUE)
-    public void delete(@RequestParam long id){
-        Item item = itemService.findById(id);
-        
+    public void delete(@RequestBody Item item){        
         itemService.delete(item);
     }
 }//ItemController
