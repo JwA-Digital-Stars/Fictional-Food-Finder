@@ -64,7 +64,6 @@ public class OwnerService{
             if (currentOwner == null)
                 return false;
             if (currentOwner.getPassword().equals(password)){
-                truck = truckService.findByOwner(currentOwner);
                 return true;
             }
             currentOwner = null;
