@@ -94,4 +94,27 @@ public class OwnerController {
     public boolean loggedIn(){
         return ownerService.isLoggedIn();
     }
+    
+    @PostMapping(path="/truck/addItem", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public String addItem(@RequestBody String[] itemInfo){
+        String name = itemInfo[0];
+        float cost = Float.parseFloat(itemInfo[1]);
+        boolean result = ownerService.addItem(name, cost);
+        
+        if (result)
+            return String.format("%s added to truck.", name);
+        else
+            return "Could not add item.";
+    }
+    
+    @PostMapping(path="/truck/remove", consumes=MediaType.APPLICATION_JSON_VALUE)
+    public String removeItem(@RequestParam int id){
+
+        boolean result = ownerService.removeItem(id);
+        
+        if (result)
+            return "Removed item from truck.";
+        else
+            return "Could not remove item.";
+    }
 }//OwnerController

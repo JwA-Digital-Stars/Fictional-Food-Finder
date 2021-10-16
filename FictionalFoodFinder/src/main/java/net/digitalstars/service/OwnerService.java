@@ -3,6 +3,7 @@ package net.digitalstars.service;
 import net.digitalstars.model.Owner;
 import java.util.List;
 import java.util.Optional;
+import net.digitalstars.model.Item;
 import net.digitalstars.model.Truck;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,11 +11,11 @@ import net.digitalstars.repository.OwnerRepository;
 
 @Service("ownerService")
 public class OwnerService{
-    
     @Autowired
     private TruckService truckService;
     @Autowired
-    private OwnerRepository ownerRepository;
+    private ItemService itemService;
+    private final OwnerRepository ownerRepository;
     
     private Owner currentOwner;
     private Truck truck;
@@ -63,7 +64,7 @@ public class OwnerService{
             if (currentOwner == null)
                 return false;
             if (currentOwner.getPassword().equals(password)){
-                truckService.setCurrentTruck(truck);
+                truck = truckService.findByOwner(currentOwner);
                 return true;
             }
             currentOwner = null;
@@ -85,15 +86,40 @@ public class OwnerService{
     
     public boolean addTruck(String truckName){
         if (isLoggedIn()){
-            Truck truck = new Truck(truckName, currentOwner);
-            this.truck = truckService.create(truck);
+            Truck temp = new Truck(truckName, currentOwner);
+            truck = truckService.create(temp);
             ownerRepository.save(currentOwner);
             return true;
         } else
             return false;
     }
     
+    public boolean addItem(String name, float cost){        
+        if (truck == null)
+            return false;
+        Item item = new Item(name, cost, truck);
+        
+        itemService.create(item);
+        return true;
+    }
+    
+    public boolean removeItem(int id){
+        
+        if (truck == null)
+            return false;
+        
+        Item item = itemService.findById(id);
+        
+        if (item == null)
+            return false;
+        
+        itemService.delete(item);
+        truckService.save(truck);
+        return true;
+    }
+    
     public boolean isLoggedIn(){
         return currentOwner != null;
     }
+    
 }

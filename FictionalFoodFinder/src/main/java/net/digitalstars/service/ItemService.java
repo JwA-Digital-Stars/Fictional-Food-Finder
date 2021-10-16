@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 @Service("itemService")
 public class ItemService {
-    
     private final ItemRepository itemRepository;
     
     @Autowired
@@ -19,14 +18,14 @@ public class ItemService {
         this.itemRepository = itemRepository;
     }
     
-    public String create(Item item){
+    public Item create(Item item){
         List<Item> items = findAll();
         for (Item i : items){
-            if (i.getId() == item.getId())
-                return "This item already exists";
+            if (i.getName().equals(item.getName()) && i.getTruck().equals(item.getTruck()))
+                return null;
         }
         itemRepository.save(item);
-        return "Item added!";
+        return item;
     }
     
     public Item save(Item item) {
@@ -47,14 +46,14 @@ public class ItemService {
         return items;
     }
     
-    public Item findById(long id){
+    public Item findById(int id){
         Optional<Item> itemOp = itemRepository.findById(id);
         return itemOp.orElse(null);
     }
     
-    public List<Item> findByTruckName(Truck truck){
-        return itemRepository.findByTruckName(truck.getName());
-    }
+//    public List<Item> findByTruckName(Truck truck){
+//        return itemRepository.findByTruckName(truck.getName());
+//    }
     
     public void delete(Item item){
         itemRepository.delete(item);
