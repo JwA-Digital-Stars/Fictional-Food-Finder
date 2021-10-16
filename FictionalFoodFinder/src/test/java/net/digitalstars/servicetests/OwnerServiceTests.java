@@ -80,8 +80,6 @@ public class OwnerServiceTests {
 		
 		Mockito.when(ownerRepository.findById(testOwner.getEmail())).thenReturn(OptionalOwner);
 		
-		//assertEquals(true, false);
-		
 		assertFalse(ownerService.login("NotExistingOwner@test.net", "678"));
 		
 	}
@@ -93,8 +91,6 @@ public class OwnerServiceTests {
 		
 		Mockito.when(ownerRepository.findById(testOwner.getEmail())).thenReturn(OptionalOwner);
 		
-		//assertEquals(true, false);
-		
 		assertTrue(ownerService.login("Owner1@test.net", "678"));
 		
 	}
@@ -105,8 +101,6 @@ public class OwnerServiceTests {
 		Optional<Owner> OptionalOwner = Optional.of(testOwner);
 		
 		Mockito.when(ownerRepository.findById(testOwner.getEmail())).thenReturn(OptionalOwner);
-		
-		//assertEquals(true, false);
 		
 		assertFalse(ownerService.login("Owner1@test.net", "wrongPassword"));
 		
