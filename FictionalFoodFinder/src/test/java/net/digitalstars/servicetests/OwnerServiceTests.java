@@ -53,9 +53,9 @@ public class OwnerServiceTests {
 	@Test
 	public void SuccessfulFindOwner() {
 		Owner testOwner = new Owner("Owner1@test.net","678", "Uncle Dane");
-		//Optional<Owner> OptionalOwner = Optional.of(testOwner);
+		Optional<Owner> OptionalOwner = Optional.of(testOwner);
 		
-		Mockito.when(ownerRepository.getById(testOwner.getEmail())).thenReturn(testOwner);
+		Mockito.when(ownerRepository.findById(testOwner.getEmail())).thenReturn(OptionalOwner);
 		
 		assertEquals(testOwner, ownerService.findById(testOwner.getEmail()));
 	}
@@ -66,8 +66,9 @@ public class OwnerServiceTests {
 	@Test
 	public void FailedToFindOwner() {
 		Owner testOwner = new Owner("Owner1@test.net","678", "Uncle Dane");
+		Optional<Owner> OptionalOwner = Optional.of(testOwner);
 		
-		Mockito.when(ownerRepository.getById(testOwner.getEmail())).thenReturn(testOwner);
+		Mockito.when(ownerRepository.findById(testOwner.getEmail())).thenReturn(OptionalOwner);
 		
 		assertNotEquals(testOwner, ownerService.findById("NotExistingOwner@test.net"));
 	}
@@ -75,8 +76,9 @@ public class OwnerServiceTests {
 	@Test
 	public void NullLogInTest() {
 		Owner testOwner = new Owner("Owner1@test.net","678", "Uncle Dane");
+		Optional<Owner> OptionalOwner = Optional.of(testOwner);
 		
-		Mockito.when(ownerRepository.getById(testOwner.getEmail())).thenReturn(testOwner);
+		Mockito.when(ownerRepository.findById(testOwner.getEmail())).thenReturn(OptionalOwner);
 		
 		//assertEquals(true, false);
 		
@@ -87,8 +89,9 @@ public class OwnerServiceTests {
 	@Test
 	public void SuccessfulLogInTest() {
 		Owner testOwner = new Owner("Owner1@test.net","678", "Uncle Dane");
+		Optional<Owner> OptionalOwner = Optional.of(testOwner);
 		
-		Mockito.when(ownerRepository.getById(testOwner.getEmail())).thenReturn(testOwner);
+		Mockito.when(ownerRepository.findById(testOwner.getEmail())).thenReturn(OptionalOwner);
 		
 		//assertEquals(true, false);
 		
@@ -99,8 +102,9 @@ public class OwnerServiceTests {
 	@Test
 	public void WrongPasswordLogInTest() {
 		Owner testOwner = new Owner("Owner1@test.net","678", "Uncle Dane");
+		Optional<Owner> OptionalOwner = Optional.of(testOwner);
 		
-		Mockito.when(ownerRepository.getById(testOwner.getEmail())).thenReturn(testOwner);
+		Mockito.when(ownerRepository.findById(testOwner.getEmail())).thenReturn(OptionalOwner);
 		
 		//assertEquals(true, false);
 		
