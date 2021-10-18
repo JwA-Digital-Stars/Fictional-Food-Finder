@@ -11,14 +11,15 @@ import org.springframework.stereotype.Service;
 
 @Service("truckService")
 public class TruckService {
-    private ItemService itemService;
-    private final TruckRepository truckRepository;
+    private static ItemService itemService;
+    private static OwnerService ownerService;
+    private static TruckRepository truckRepository;
     private Truck currentTruck;
     
     @Autowired
     public TruckService(TruckRepository truckRepository){
         super();
-        this.truckRepository = truckRepository;
+        TruckService.truckRepository = truckRepository;
     }
 
     public Truck getCurrentTruck() {
@@ -35,8 +36,8 @@ public class TruckService {
             for (Truck t : trucks)
                 if (t.getName().equals(truck.getName()))
                     return null;
-        truckRepository.save(truck);
-        return truck;
+        return truckRepository.save(truck);
+        
     }
     
     public Truck save(Truck truck){

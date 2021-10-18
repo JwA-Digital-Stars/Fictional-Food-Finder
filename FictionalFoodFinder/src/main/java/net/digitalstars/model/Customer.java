@@ -30,7 +30,6 @@ public class Customer implements Serializable{
     @Column
     private String name;
     @ManyToMany
-    @Transient
     private List<Truck> favorites;
     
     @Autowired

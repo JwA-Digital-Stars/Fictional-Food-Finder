@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @CrossOrigin(origins="http://localhost:4200")
 @RestController("truckController") @RequestMapping("/truck")
@@ -25,7 +26,7 @@ public class TruckController {
         this.truckService = truckService;
     }
     
-    @PostMapping(path="/create", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping("/create")
     public Truck create(@RequestBody Truck truck){
         return truckService.create(truck);
     }
