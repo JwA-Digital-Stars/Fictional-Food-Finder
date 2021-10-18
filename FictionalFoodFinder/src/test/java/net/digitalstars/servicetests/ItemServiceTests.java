@@ -13,6 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import net.digitalstars.model.Item;
 import net.digitalstars.model.Owner;
@@ -20,6 +21,7 @@ import net.digitalstars.model.Truck;
 import net.digitalstars.repository.ItemRepository;
 import net.digitalstars.service.ItemService;
 
+@SpringBootTest
 public class ItemServiceTests {
 	
 	@InjectMocks
@@ -92,4 +94,24 @@ public class ItemServiceTests {
 		assertNotEquals(taco, itemService.findById(3));
 		assertNotEquals(hotdog, itemService.findById(3));
 	}
+	
+//	@Test
+//	public void GetAllItemsByASingleTruck() {
+//		Owner UncleDane = new Owner("Owner1@test.net", "678" , "Uncle Dane");
+//		
+//		Truck truck1 = new Truck("Uncle Danes HotDog Truck",UncleDane);
+//		Truck truck2 = new Truck("Uncle Danes Taco Truck",UncleDane);
+//		
+//		Item item1 = new Item(1,"Hotdog",2, truck1);
+//		Item item3 = new Item(3,"Super Hotdog",5, truck1);
+//		Item item2 = new Item(2,"Tacos",4,truck2);
+//		
+//		Mockito.when(itemRepository.findAll()).thenReturn(Arrays.asList(item1,item2,item3));
+//		
+//		List<Item> listOfItemsInTruck1 = itemService.getItems(truck1);
+//		List<Item> listOfItemsInTruck2 = itemService.getItems(truck2);
+//		
+//		assertEquals(2, listOfItemsInTruck1.size());
+//		assertEquals(1, listOfItemsInTruck2.size());
+//	}
 }

@@ -18,13 +18,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 //import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import net.digitalstars.model.Customer;
 import net.digitalstars.repository.CustomerRepository;
 import net.digitalstars.service.CustomerService;
 
 
-//@SpringBootTest
+@SpringBootTest
 public class CustomerServiceTests {
 	
 	@InjectMocks

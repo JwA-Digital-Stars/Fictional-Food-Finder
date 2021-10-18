@@ -15,11 +15,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import net.digitalstars.model.Owner;
 import net.digitalstars.repository.OwnerRepository;
 import net.digitalstars.service.OwnerService;
 
+@SpringBootTest
 public class OwnerServiceTests {
 	
 	@InjectMocks
