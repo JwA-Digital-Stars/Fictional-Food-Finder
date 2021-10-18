@@ -68,11 +68,11 @@ public class OwnerController {
     
     @CrossOrigin(origins="http://localhost:4200")
     @RequestMapping("/login")
-    public String login(@RequestBody Owner owner){
+    public Owner login(@RequestBody Owner owner){
         Owner result = ownerService.login(owner);
         if (result != null)
-            return result.toString();
-        return "Invalid login";
+            return result;
+        return null;
     }
     
     @RequestMapping("/logout")
