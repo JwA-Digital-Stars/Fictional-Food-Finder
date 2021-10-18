@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins="http://localhost:4200")
 @RestController("customerController") @RequestMapping("/customer")
 public class CustomerController {
     
@@ -28,7 +27,8 @@ public class CustomerController {
         this.customerService = customerService;
     }
     
-    @PostMapping(path="/create", consumes=MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin(origins="http://localhost:4200")
+    @RequestMapping("/create")
     public void create(@RequestBody Customer customer){
         customerService.create(customer);
     }
@@ -45,9 +45,9 @@ public class CustomerController {
         return customer.toString();
     }
     
-    @GetMapping(path="/login", produces=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String login(@RequestParam String email, @RequestParam String password){
-        boolean result = customerService.login(email, password);
+    @RequestMapping("/login")
+    public String login(@RequestBody Customer customer){
+        boolean result = customerService.login(customer);
         
         if(result)
             return "Successful login";

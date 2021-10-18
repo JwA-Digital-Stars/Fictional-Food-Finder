@@ -58,17 +58,18 @@ public class OwnerService{
         return ownerOp.orElse(null);
     }
     
-    public boolean login(String email, String password){
-        if (!isLoggedIn()){
-            currentOwner = findById(email);
+    public Owner login(Owner owner){
+        //if (!isLoggedIn()){
+            currentOwner = findById(owner.getEmail());
             if (currentOwner == null)
-                return false;
-            if (currentOwner.getPassword().equals(password)){
-                return true;
+                return null;
+            if (currentOwner.getPassword().equals(owner.getPassword())){
+                return currentOwner;
             }
-            currentOwner = null;
-        }
-        return false;
+            return null;
+            //currentOwner = null;
+        //}
+        //return false;
     }
     
     public boolean logout(){
@@ -83,14 +84,12 @@ public class OwnerService{
         ownerRepository.delete(owner);
     }
     
-    public boolean addTruck(String truckName){
-        if (isLoggedIn()){
-            Truck temp = new Truck(truckName, currentOwner);
-            truck = truckService.create(temp);
-            ownerRepository.save(currentOwner);
-            return true;
-        } else
-            return false;
+    public boolean addTruck(String truckName, String email){
+        Owner owner = ownerRepository.findById(email).get();
+        Truck temp = new Truck(truckName, owner);
+        truck = truckService.create(temp);
+        ownerRepository.save(owner);
+        return true;
     }
     
     public boolean addItem(String name, float cost){        

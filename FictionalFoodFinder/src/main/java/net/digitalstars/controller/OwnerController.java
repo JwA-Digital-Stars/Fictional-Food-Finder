@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 @CrossOrigin(origins="http://localhost:4200")
 @RestController("ownerController") @RequestMapping("/owner")
@@ -58,21 +59,20 @@ public class OwnerController {
         return new ResponseEntity<>(this.ownerService.findAll(), HttpStatus.OK); 
     }
     
-    @GetMapping(path="/id", produces=MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path="/{email}", produces=MediaType.APPLICATION_JSON_VALUE)
     public String findById(@RequestParam String email){
         Owner owner = ownerService.findById(email);
         System.out.println(owner);
         return owner.toString();
     }
     
-    @GetMapping(path="/login", produces=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String login(@RequestParam String email, @RequestParam String password){
-        boolean result = ownerService.login(email, password);
-        
-        if(result)
-            return "Successful login";
-        else
-            return "Invalid login";
+    @CrossOrigin(origins="http://localhost:4200")
+    @RequestMapping("/login")
+    public String login(@RequestBody Owner owner){
+        Owner result = ownerService.login(owner);
+        if (result != null)
+            return result.toString();
+        return "Invalid login";
     }
     
     @RequestMapping("/logout")
@@ -86,8 +86,8 @@ public class OwnerController {
     }
     
     @RequestMapping("/addTruck")
-    public boolean addTruck(@RequestParam String truck_name){
-        boolean result = ownerService.addTruck(truck_name);
+    public boolean addTruck(@RequestParam("name") String name, @RequestParam("email") String email){
+        boolean result = ownerService.addTruck(name, email);
 
         return result;
     }

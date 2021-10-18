@@ -55,12 +55,12 @@ public class CustomerService{
         return customerOp.orElse(null);
     }
     
-    public boolean login(String email, String password){
+    public boolean login(Customer customer){
         if (!isLoggedIn()){
-            currentCustomer = findById(email);
+            currentCustomer = findById(customer.getEmail());
             if (currentCustomer == null)
                 return false;
-            if (currentCustomer.getPassword().equals(password))
+            if (currentCustomer.getPassword().equals(customer.getPassword()))
                 return true;
             currentCustomer = null;
         }
