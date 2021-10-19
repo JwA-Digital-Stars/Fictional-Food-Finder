@@ -21,10 +21,15 @@ The Fictional Food Finder allows users to be able to sign up or sign in to view 
 
 ## Features
 
-
+* Log in system for owners and customers
+* Sign up to create an account under customer, or as a food truck owner.
+* Displays all trucks for user to see.
 
 To-Do List:
 
+* Finish Implementing the front end UI for Owner and Customer
+* AFinish the implementation to make a working favorites button
+* Implement Google Maps API to show the user their location and to find the nearest location.
 
 
 ## Getting Started
@@ -39,12 +44,14 @@ git clone https://github.com/JwA-Digital-Stars/Fictional-Food-Finder.git
 
 git clone https://github.com/JwA-Digital-Stars/Frontend-Fictional-Food-Finder
 
+After that, you will need to have an EC2 set up on AWS as well as a S3 Bucket. Once you have those, make sure Java 8, and Jenkins is installed on that EC2.
+
 
 ## Usage
 
 
 
 ## Contributors
-Alex Junker
-Patrick Downton
-Jose Gomez
+* Alex Junker
+* Patrick Downton
+* Jose Gomez
