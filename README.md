@@ -49,6 +49,45 @@ After that, you will need to have an EC2 set up on AWS as well as a S3 Bucket. O
 
 ## Usage
 
+Register as a Customer.
+
+![](./Images/customer-registration.png)
+
+Register as a Food Truck Owner.
+
+![](./Images/owner-registration.png)
+
+Register your food truck.
+
+![](./Images/truck-registration.png)
+
+This is the login page for the application.
+
+![](./Images/Login.png)
+
+If logged in as a customer this is the customer dashboard.
+
+![](./Images/customer-dashboard.png)
+
+If logged in as a customer this is the owner dashboard.
+
+![](./Images/owner-dashboard.png)
+
+The owner can update his food truck menu with the following form. 
+
+![](./Images/menu-update.png)
+
+As a cutomer you are given a list of all the available trucks. There is an option to add trucks to favorites.
+
+![](./Images/customer-truck-finder.png)
+
+The list displayed of the customers favorites.
+
+![](./Images/favorites.png)
+
+
+
+
 
 
 ## Contributors
