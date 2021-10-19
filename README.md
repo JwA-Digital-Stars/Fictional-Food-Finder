@@ -28,7 +28,7 @@ The Fictional Food Finder allows users to be able to sign up or sign in to view 
 To-Do List:
 
 * Finish Implementing the front end UI for Owner and Customer
-* AFinish the implementation to make a working favorites button
+* Finish the implementation to make a working favorites button
 * Implement Google Maps API to show the user their location and to find the nearest location.
 
 
